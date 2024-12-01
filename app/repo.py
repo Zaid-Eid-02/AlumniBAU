@@ -75,7 +75,7 @@ class repo:
         return (
             False
             if not repo.is_admin(id)
-            else db.execute("SELECT manage FROM admins WHERE id = ?;", id)
+            else db.execute("SELECT manage FROM admins WHERE id = ?;", id)[0]['manage']
         )
 
     @staticmethod
@@ -83,7 +83,7 @@ class repo:
         return (
             False
             if not repo.is_admin(id)
-            else db.execute("SELECT alumni_data FROM admins WHERE id = ?;", id)
+            else db.execute("SELECT alumni_data FROM admins WHERE id = ?;", id)[0]['alumni_data']
         )
 
     @staticmethod
@@ -91,7 +91,7 @@ class repo:
         return (
             False
             if not repo.is_admin(id)
-            else db.execute("SELECT announce FROM admins WHERE id = ?;", id)
+            else db.execute("SELECT announce FROM admins WHERE id = ?;", id)[0]['announce']
         )
 
     @staticmethod
@@ -99,18 +99,14 @@ class repo:
         return (
             False
             if not repo.is_admin(id)
-            else db.execute("SELECT mod_permission FROM admins WHERE id = ?;", id)
+            else db.execute("SELECT mod_permission FROM admins WHERE id = ?;", id)[0]['mod']
         )
 
     @staticmethod
     def add_alumni(csv_file):
         csv_file = csv_file.split("\n")
         _header = csv_file[0].split(",")
-        for line in csv_file[1:]:
-            row = line.split(",")
-            id = repo.add_user(row[0], row[3])
-            db.execute(
-                """
+        query = """
 INSERT INTO alumni (
 id,
 student_id,
@@ -130,46 +126,54 @@ public_sector,
 work_phone,
 postgrad,
 work
-) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);""",
-                id,
-                row[0],  # student_id
-                row[1],  # full_name
-                row[2],  # nationality
-                0 if row[4] == "ذكر" else 1,  # gender
-                int(float(row[5]) * 100),  # GPA
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"""
+        params = []
+        for line in csv_file[1:]:
+            row = line.split(",")
+            id = repo.add_user(row[0], row[3])
+            params.append(
                 (
-                    1
-                    if row[6] == "علم الحاسوب"  # major_id
-                    else (
-                        2
-                        if row[6] == "هندسة البرمجيات"
+                    id,
+                    row[0],  # student_id
+                    row[1],  # full_name
+                    row[2],  # nationality
+                    0 if row[4] == "ذكر" else 1,  # gender
+                    int(float(row[5]) * 100),  # GPA
+                    (
+                        1
+                        if row[6] == "علم الحاسوب"  # major_id
                         else (
-                            3
-                            if row[6] == "نظم المعلومات الحاسوبية"
+                            2
+                            if row[6] == "هندسة البرمجيات"
                             else (
-                                4
-                                if row[6] == "الرسم الحاسوبي والرسوم المتحركة"
-                                else 5  # الأمن السيبراني
+                                3
+                                if row[6] == "نظم المعلومات الحاسوبية"
+                                else (
+                                    4
+                                    if row[6] == "الرسم الحاسوبي والرسوم المتحركة"
+                                    else 5  # الأمن السيبراني
+                                )
                             )
                         )
-                    )
-                ),
-                (
-                    1
-                    if row[7] == "بكالوريوس"  # degree_id
-                    else 2 if row[7] == "ماجستير (مسار الرسالة)" else 3
-                ),  # ماجستير (مسار الشامل)
-                row[8].split("/")[1],  # graduation_year
-                row[9],  # graduation_semester
-                row[10],  # phone
-                row[11],  # work_place
-                row[12],  # work_start_date
-                row[13],  # work_address
-                (
-                    1 if row[14] == "العام" else 0 if row[14] == "الخاص" else None
-                ),  # public_sector
-                row[15],  # work_phone
-                1 if row[7] != "بكالوريوس" else None,  # postgrad
-                1 if row[11] else None,  # work
+                    ),
+                    (
+                        1
+                        if row[7] == "بكالوريوس"  # degree_id
+                        else 2 if row[7] == "ماجستير (مسار الرسالة)" else 3
+                    ),  # ماجستير (مسار الشامل)
+                    row[8].split("/")[1],  # graduation_year
+                    row[9],  # graduation_semester
+                    row[10],  # phone
+                    row[11],  # work_place
+                    row[12],  # work_start_date
+                    row[13],  # work_address
+                    (
+                        1 if row[14] == "العام" else 0 if row[14] == "الخاص" else None
+                    ),  # public_sector
+                    row[15],  # work_phone
+                    1 if row[7] != "بكالوريوس" else None,  # postgrad
+                    1 if row[11] else None,  # work
+                )
             )
+        db.execute_many(query, params)
         return len(csv_file) - 1

@@ -82,7 +82,7 @@ class Database:
             cursor.execute(sql, params)
             conn.commit()
             results = (
-                [dict(row) for row in cursor.fetchall()]
+                cursor.fetchall()
                 if cursor.description
                 else cursor.lastrowid
             )
@@ -91,6 +91,17 @@ class Database:
         except sqlite3.Error as e:
             print(f"Error executing query: {e}")
             return []
+
+    def execute_many(self, sql: str, params: list) -> None:
+        """Executes a parameterized SQL query with multiple sets of parameters."""
+        try:
+            conn = self._get_connection()
+            cursor = conn.cursor()
+            cursor.executemany(sql, params)
+            conn.commit()
+            cursor.close()
+        except sqlite3.Error as e:
+            print(f"Error executing query: {e}")
 
     def close(self):
         """Closes the database connection."""
