@@ -38,7 +38,7 @@ h3 {
 }
 
 @media (max-width: 768px) {
-    .container > h3 {
+    .container > a {
         display: none;
     }
     .counters {
