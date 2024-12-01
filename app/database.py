@@ -95,11 +95,8 @@ class Database:
     def execute_many(self, sql: str, params: list) -> None:
         """Executes a parameterized SQL query with multiple sets of parameters."""
         try:
-            conn = self._get_connection()
-            cursor = conn.cursor()
-            cursor.executemany(sql, params)
-            conn.commit()
-            cursor.close()
+            with self._get_connection() as c:
+                c.executemany(sql, params)
         except sqlite3.Error as e:
             print(f"Error executing query: {e}")
 

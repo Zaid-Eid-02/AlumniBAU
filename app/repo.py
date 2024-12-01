@@ -1,5 +1,7 @@
 from app.database import db
 from werkzeug.security import generate_password_hash
+from io import StringIO
+import csv
 
 
 class repo:
@@ -10,6 +12,10 @@ class repo:
             username,
             generate_password_hash(password),
         )
+
+    @staticmethod
+    def get_last_user_id():
+        return db.execute("SELECT id FROM users ORDER BY id DESC LIMIT 1;")[0]["id"]
 
     @staticmethod
     def get_user(username):
@@ -28,14 +34,15 @@ class repo:
         return repo.get_users(username)
 
     @staticmethod
-    def add_admin(id, name, announce, alumni_data, mod):
+    def add_admin(id, name, manage, announce, alumni_data, mod):
         return db.execute(
-            "INSERT INTO admins (id, name, announce, alumni_data, mod) VALUES (?, ?, ?, ?, ?);",
+            "INSERT INTO admins (id, mod, name, manage, announce, alumni_data) VALUES (?, ?, ?, ?, ?, ?);",
             id,
+            mod,
             name,
+            manage,
             announce,
             alumni_data,
-            mod,
         )
 
     @staticmethod
@@ -75,7 +82,7 @@ class repo:
         return (
             False
             if not repo.is_admin(id)
-            else db.execute("SELECT manage FROM admins WHERE id = ?;", id)[0]['manage']
+            else db.execute("SELECT manage FROM admins WHERE id = ?;", id)[0]["manage"]
         )
 
     @staticmethod
@@ -83,7 +90,9 @@ class repo:
         return (
             False
             if not repo.is_admin(id)
-            else db.execute("SELECT alumni_data FROM admins WHERE id = ?;", id)[0]['alumni_data']
+            else db.execute("SELECT alumni_data FROM admins WHERE id = ?;", id)[0][
+                "alumni_data"
+            ]
         )
 
     @staticmethod
@@ -91,7 +100,9 @@ class repo:
         return (
             False
             if not repo.is_admin(id)
-            else db.execute("SELECT announce FROM admins WHERE id = ?;", id)[0]['announce']
+            else db.execute("SELECT announce FROM admins WHERE id = ?;", id)[0][
+                "announce"
+            ]
         )
 
     @staticmethod
@@ -99,19 +110,32 @@ class repo:
         return (
             False
             if not repo.is_admin(id)
-            else db.execute("SELECT mod_permission FROM admins WHERE id = ?;", id)[0]['mod']
+            else db.execute("SELECT mod_permission FROM admins WHERE id = ?;", id)[0][
+                "mod"
+            ]
         )
 
     @staticmethod
     def add_alumni(csv_file):
-        csv_file = csv_file.split("\n")
-        _header = csv_file[0].split(",")
+        majors = {
+            "علم الحاسوب": 1,
+            "هندسة البرمجيات": 2,
+            "نظم المعلومات الحاسوبية": 3,
+            "الرسم الحاسوبي والرسوم المتحركة": 4,
+            "الأمن السيبراني": 5,
+        }
+        degrees = {
+            "بكالوريوس": 1,
+            "ماجستير (مسار الرسالة)": 2,
+            "ماجستير (مسار الشامل)": 3,
+        }
         query = """
 INSERT INTO alumni (
 id,
 student_id,
 full_name,
 nationality,
+ssn_hash,
 gender,
 GPA,
 major_id,
@@ -126,54 +150,35 @@ public_sector,
 work_phone,
 postgrad,
 work
-) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"""
-        params = []
-        for line in csv_file[1:]:
-            row = line.split(",")
-            id = repo.add_user(row[0], row[3])
-            params.append(
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"""
+        id = repo.get_last_user_id() + 1
+        csv_data = StringIO(csv_file)
+        reader = csv.reader(csv_data)
+        next(reader)  # Skip header
+        params = [
+            (
+                id + i,  # id
+                row[0],  # student_id
+                row[1],  # full_name
+                row[2],  # nationality
+                generate_password_hash(row[3]),  # password_hash
+                0 if row[4] == "ذكر" else 1,  # gender
+                int(float(row[5]) * 100),  # GPA
+                majors[row[6]],  # major_id
+                degrees[row[7]],  # degree_id
+                row[8].split("/")[1],  # graduation_year
+                row[9],  # graduation_semester
+                row[10],  # phone
+                row[11],  # work_place
+                row[12],  # work_start_date
+                row[13],  # work_address
                 (
-                    id,
-                    row[0],  # student_id
-                    row[1],  # full_name
-                    row[2],  # nationality
-                    0 if row[4] == "ذكر" else 1,  # gender
-                    int(float(row[5]) * 100),  # GPA
-                    (
-                        1
-                        if row[6] == "علم الحاسوب"  # major_id
-                        else (
-                            2
-                            if row[6] == "هندسة البرمجيات"
-                            else (
-                                3
-                                if row[6] == "نظم المعلومات الحاسوبية"
-                                else (
-                                    4
-                                    if row[6] == "الرسم الحاسوبي والرسوم المتحركة"
-                                    else 5  # الأمن السيبراني
-                                )
-                            )
-                        )
-                    ),
-                    (
-                        1
-                        if row[7] == "بكالوريوس"  # degree_id
-                        else 2 if row[7] == "ماجستير (مسار الرسالة)" else 3
-                    ),  # ماجستير (مسار الشامل)
-                    row[8].split("/")[1],  # graduation_year
-                    row[9],  # graduation_semester
-                    row[10],  # phone
-                    row[11],  # work_place
-                    row[12],  # work_start_date
-                    row[13],  # work_address
-                    (
-                        1 if row[14] == "العام" else 0 if row[14] == "الخاص" else None
-                    ),  # public_sector
-                    row[15],  # work_phone
-                    1 if row[7] != "بكالوريوس" else None,  # postgrad
-                    1 if row[11] else None,  # work
-                )
+                    1 if row[14] == "العام" else 0 if row[14] == "الخاص" else None
+                ),  # public_sector
+                row[15],  # work_phone
+                1 if row[7] != "بكالوريوس" else None,  # postgrad
+                1 if row[11] else None,  # work
             )
+            for i, row in enumerate(reader)
+        ]
         db.execute_many(query, params)
-        return len(csv_file) - 1

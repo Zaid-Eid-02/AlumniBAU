@@ -20,6 +20,6 @@ def upload():
     if form.validate_on_submit():
         file = form.file.data
         file_content = file.read().decode("utf-8")
-        count = repo.add_alumni(file_content)
-        message = f"Successfully added {count} alumni"
+        repo.add_alumni(file_content)
+        message = f"Successfully added alumni"
     return render_template("admin/upload.jinja", form=form, message=message)

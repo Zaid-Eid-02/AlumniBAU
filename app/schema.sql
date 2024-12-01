@@ -1,6 +1,6 @@
 CREATE TABLE users (
     id INTEGER PRIMARY KEY,
-    username TEXT NOT NULL,
+    username TEXT NOT NULL UNIQUE,
     password_hash TEXT NOT NULL,
     following_count INTEGER DEFAULT 0,
     followers_count INTEGER DEFAULT 0,
@@ -9,6 +9,8 @@ CREATE TABLE users (
     likes_count INTEGER DEFAULT 0,
     dislikes_count INTEGER DEFAULT 0
 );
+
+CREATE UNIQUE INDEX users_username_index ON users (username);
 
 CREATE TABLE admins (
     id INTEGER PRIMARY KEY,
@@ -44,6 +46,7 @@ CREATE TABLE alumni (
 
     -- constants
     student_id INTEGER NOT NULL,
+    ssn_hash TEXT NOT NULL,
     full_name TEXT,
     nationality TEXT,
     gender BOOLEAN,
@@ -80,7 +83,8 @@ CREATE TABLE alumni (
     FOREIGN KEY (id) REFERENCES users(id),
     FOREIGN KEY (major_id) REFERENCES majors(id),
     FOREIGN KEY (martial_status_id) REFERENCES martial_status(id),
-    FOREIGN KEY (degree_id) REFERENCES degree(id)
+    FOREIGN KEY (degree_id) REFERENCES degree(id),
+    FOREIGN KEY (ssn_hash) REFERENCES users(password_hash)
 );
 
 CREATE TABLE alumni_posts (
@@ -228,6 +232,7 @@ CREATE TABLE stats (
 INSERT INTO stats DEFAULT VALUES;
 
 CREATE TRIGGER add_alumni_stats AFTER INSERT ON alumni BEGIN
+    INSERT INTO users (id, username, password_hash) VALUES (NEW.id, NEW.student_id, NEW.ssn_hash);
     UPDATE stats SET alumni_count = alumni_count + 1;
 
     -- gender
