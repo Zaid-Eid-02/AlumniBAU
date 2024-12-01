@@ -2,6 +2,8 @@ git clone https://github.com/Om4r37/AlumniBAU.git
 cd AlumniBAU\
 New-Item -Path . -Name "config.py" -ItemType "file" -Force
 echo "# change before deployment
+DATABASE = 'database.db'
+SCHEMA = 'schema.sql'
 DEBUG = True
 SECRET_KEY = 'development key'
 USERNAME = 'admin'

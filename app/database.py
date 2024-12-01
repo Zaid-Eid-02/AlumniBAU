@@ -1,6 +1,7 @@
+from re import S
 import sqlite3, os, sys
 from werkzeug.security import generate_password_hash
-from app.config import USERNAME, PASSWORD, DEBUG
+from app.config import DATABASE, SCHEMA, DEBUG, USERNAME, PASSWORD
 
 
 class Database:
@@ -13,7 +14,7 @@ class Database:
             cls._instance = super(Database, cls).__new__(cls)
         return cls._instance
 
-    def __init__(self, db_name="database.db", schema_file="schema.sql"):
+    def __init__(self, db_name=DATABASE, schema_file=SCHEMA):
         if hasattr(self, "_initialized") and self._initialized:
             return
         self._initialized = True
