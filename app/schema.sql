@@ -100,30 +100,21 @@ CREATE TABLE majors (
     name TEXT NOT NULL
 );
 
-INSERT INTO majors (name) VALUES ('Computer Science');
-INSERT INTO majors (name) VALUES ('Software Engineering');
-INSERT INTO majors (name) VALUES ('Information Systems');
-INSERT INTO majors (name) VALUES ('Computer Graphics');
-INSERT INTO majors (name) VALUES ('Information Security');
+INSERT INTO majors (name) VALUES ('Computer Science'), ('Software Engineering'), ('Information Systems'), ('Computer Graphics'), ('Information Security');
 
 CREATE TABLE degree (
     id INTEGER PRIMARY KEY,
     name TEXT NOT NULL
 );
 
-INSERT INTO degree (name) VALUES ('Bachelor');
-INSERT INTO degree (name) VALUES ('Master Thesis');
-INSERT INTO degree (name) VALUES ('Master Comprehensive');
+INSERT INTO degree (name) VALUES ('Bachelor'), ('Master Thesis'), ('Master Comprehensive');
 
 CREATE TABLE martial_status (
     id INTEGER PRIMARY KEY,
     name TEXT NOT NULL
 );
 
-INSERT INTO martial_status (name) VALUES ('Married');
-INSERT INTO martial_status (name) VALUES ('Single');
-INSERT INTO martial_status (name) VALUES ('Divorced');
-INSERT INTO martial_status (name) VALUES ('Widowed');
+INSERT INTO martial_status (name) VALUES ('Married'), ('Single'), ('Divorced'), ('Widowed');
 
 CREATE TABLE comments (
     id INTEGER PRIMARY KEY,
