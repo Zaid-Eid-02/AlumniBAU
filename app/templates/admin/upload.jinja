@@ -1,0 +1,12 @@
+{% extends "layout.jinja" %}
+{% from "_formhelpers.jinja" import render_field %}
+{% set tab_number = 1 %}
+{% block main %}
+<form action="/upload" method="post" enctype="multipart/form-data">
+    <a href="/static/example.csv" target="_blank">Download Example CSV</a><br>
+    {{ form.hidden_tag() }}
+    {{ render_field(form.file, accept=".csv") }}<br>
+    {{ render_field(form.submit) }}
+</form>
+{{message}}
+{% endblock %}

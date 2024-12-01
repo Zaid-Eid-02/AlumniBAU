@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/static/pics/logo/logo.ico">
+    <link href="/static/styles/styles.css" rel="stylesheet">
+    <script src="/static/scripts/htmx.min.js"></script>
+    <meta name="theme-color" content="#545454"/>
+    <title>BAU Alumni: {{title}}</title>
+</head>
+
+<body hx-boost="true">
+    <div class="navbar">
+        <div class="navbar-logo"><img src="/static/pics/logo/logo.svg">
+            <span> BAU Alumni</span>
+        </div>
+        {% if session["user_id"] %}
+        <ul class="navbar-tabs">
+            {% if session["user_id"] == 1 %}
+            <a class="navbar-tab" href="/stats">
+                <img src="/static/pics/icons/stats.svg" class="white tab-icon">&nbsp;Stats
+            </a>
+            <a class="navbar-tab" href="/manage">
+                <img src="/static/pics/icons/manage.svg" class="white tab-icon">&nbsp;Manage
+            {% else %}
+            <a class="navbar-tab" href="/survey">
+                <img src="/static/pics/icons/survey.svg" class="white tab-icon">&nbsp;Survey
+            {% endif %}
+            </a>
+            <a class="navbar-tab" href="/news">
+                <img src="/static/pics/icons/news.svg" class="white tab-icon">&nbsp;News
+            </a>
+            <a class="navbar-tab" href="/posts">
+                <img src="/static/pics/icons/posts.svg" class="white tab-icon">&nbsp;Posts
+            </a>
+        </ul>
+        <a class="logout" href="/logout">Log Out</a>
+        {% endif %}
+    </div>
+    {% if session["user_id"] %}
+    <div class="center">
+        <div class="tab-bar">
+            {% if session["user_id"] == 1 %}
+            <a class="navbar-tab" href="/stats">
+                <span>
+                    <img src="/static/pics/icons/stats.svg" class="white tab-icon">
+                </span>Stats
+            </a>
+            <a class="navbar-tab" href="/manage">
+                <span>
+                    <img src="/static/pics/icons/manage.svg" class="white tab-icon">
+                </span>Manage
+            {% else %}
+            <a class="navbar-tab" href="/survey">
+                <span>
+                    <img src="/static/pics/icons/survey.svg" class="white tab-icon">
+                </span>Survey
+            {%endif %}
+            </a>
+            <a class="navbar-tab" href="/news">
+                <span>
+                    <img src="/static/pics/icons/news.svg" class="white tab-icon">
+                </span>News
+            </a>
+            <a class="navbar-tab" href="/posts">
+                <span>
+                    <img src="/static/pics/icons/posts.svg" class="white tab-icon">
+                </span>Posts
+            </a>
+        </div>
+    </div>
+    {% endif %}
+    {% if get_flashed_messages() %}
+    <header>
+        <div id="flash" class="alert" role="alert">
+            <span id="message"> {{ get_flashed_messages() | join(" ") }} </span>
+            <button id="close" onclick="closeFlash();">X</button>
+        </div>
+    </header>
+    <style> main {margin-top: 75px;} </style>
+    {% endif %}
+    <main>
+        {% block main %}{% endblock %}
+    </main>
+<script>
+function closeFlash() {
+    document.getElementById('flash').style.display = 'none';
+    document.getElementsByTagName('main')[0].style.marginTop = '15px';
+}
+function highlightTab(tabNo) {
+    const navbarTabs = document.querySelectorAll('.navbar-tab');
+    navbarTabs[tabNo].classList.add('highlight');
+    navbarTabs[tabNo + 3 + {{1 if session["user_id"] == 1 else 0}}].classList.add('highlight');
+}
+highlightTab({{ tab_number }});
+</script>
+</body>
+</html>

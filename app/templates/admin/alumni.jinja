@@ -1,0 +1,33 @@
+{% extends "layout.jinja" %}
+{% set tab_number = 0 %}
+{% set title = "Data Table"%}
+{% block main %}
+<link rel="stylesheet" href="static/styles/table.css">
+<h2>Alumni</h2><button onclick="window.location.href='/alumni'">Reset Filters</button>
+{% if alumni %}
+<div class="table-container" style="max-width: 1220px;">
+    <table class="sortable">
+        <thead>
+            <tr>
+                <th scope="col" class="sort">Student Id</th>
+                <th class="sorttable_nosort name">Full Name</th>
+                <th scope="col" class="sort">Graduation Year</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for alumnus in alumni %}
+            <tr>
+                <td>{{ alumnus.student_id }}</td>
+                <td>{{ alumnus.full_name }}</td>
+                <td>{{ alumnus.graduation_year }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script src="static/scripts/Sortable/sorttable.js" defer></script>
+<script src="static/scripts/TableFilter/tablefilter.js" defer></script>
+{% else %}
+there's no Alumni.
+{% endif %}
+{% endblock %}

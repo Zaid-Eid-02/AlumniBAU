@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com" viewBox="124.12 148.37 77.6 85.8">
+  <defs>
+    <radialGradient gradientUnits="userSpaceOnUse" cx="-452.097" cy="-230.17" r="146.691" id="gradient-0" gradientTransform="matrix(0.003241, 0.917018, -0.999994, 0.003533, -680.800372, 185.224548)" spreadMethod="pad">
+      <stop offset="0" style="stop-color: rgb(255, 187, 0);"/>
+      <stop offset="1" style="stop-color: rgb(255, 255, 255);"/>
+    </radialGradient>
+    <bx:export>
+      <bx:file format="svg" path="logo.svg" normalization="{&quot;removeAnimations&quot;:true,&quot;convertTextsToPaths&quot;:true,&quot;splitCompoundPaths&quot;:true,&quot;embedExternalFonts&quot;:true,&quot;removeBoxySVGMetadata&quot;:true,&quot;removeForeignMetadata&quot;:true,&quot;resetTransformOrigins&quot;:true}" units="%"/>
+    </bx:export>
+  </defs>
+  <g id="object-0" transform="matrix(0.174648, 0, 0, 0.174648, 333.287048, 252.662537)">
+    <g transform="translate(-41.545 -119.72)">
+      <g transform="matrix(1, 0, 0, 1, -482.155334, 12.035079)">
+        <g>
+          <g>
+            <path style="paint-order: stroke; stroke: rgba(0, 0, 0, 0); --darkreader-inline-stroke: rgba(232, 230, 227, 0);" stroke-width="2" fill-rule="evenodd" d="M -452.252 -479.672 L -450.686 -8.04 C -252.401 -43.978 -242.282 -258.756 -239.413 -318.779 L -240.837 -478.023 L -452.252 -479.672 Z" data-darkreader-inline-stroke=""/>
+            <path transform="matrix(-1, 0, 0, -1, 0.000002, 0.000028)" style="paint-order: fill; stroke: rgba(0, 0, 0, 0); transform-box: fill-box; transform-origin: 50% 50% 0px; fill: rgb(0, 135, 76); --darkreader-inline-stroke: rgba(232, 230, 227, 0); --darkreader-inline-fill: #6effbf;" stroke-width="2" fill-rule="evenodd" d="M -662.687 -8.228 L -664.147 -479.447 C -465.122 -443.397 -453.536 -228.873 -450.656 -168.664 L -452.085 -8.927 L -662.687 -8.228 Z" data-darkreader-inline-stroke="" data-darkreader-inline-fill=""/>
+          </g>
+        </g>
+        <path style="stroke: rgba(0, 0, 0, 0); --darkreader-inline-stroke: rgba(232, 230, 227, 0); --darkreader-inline-fill: #e8e6e3; fill: url(&quot;#gradient-0&quot;); fill-rule: nonzero; paint-order: fill;" stroke-width="2" fill-rule="evenodd" d="M -598.788 -382.823 L -598.788 -297.559 C -598.788 -4.17 -305.407 -4.17 -305.407 -297.559 L -306.386 -381.896 L -598.788 -382.823 Z" data-darkreader-inline-stroke="" data-darkreader-inline-fill=""/>
+      </g>
+    </g>
+  </g>
+  <path style="" d="M 164.141 171.513 C 163.611 171.513 163.088 171.604 162.591 171.781 L 144.254 178.404 C 143.633 178.632 143.221 179.221 143.221 179.882 C 143.221 180.542 143.633 181.13 144.254 181.359 L 148.039 182.725 C 146.966 184.412 146.359 186.405 146.359 188.504 L 146.359 190.34 C 146.359 192.197 145.653 194.113 144.901 195.623 C 144.476 196.473 143.992 197.309 143.43 198.081 C 143.221 198.362 143.162 198.728 143.28 199.062 C 143.397 199.395 143.672 199.643 144.011 199.728 L 148.196 200.775 C 148.47 200.846 148.764 200.794 149.007 200.644 C 149.248 200.493 149.418 200.245 149.47 199.964 C 150.032 197.166 149.752 194.656 149.333 192.858 C 149.124 191.929 148.843 190.981 148.451 190.112 L 148.451 188.504 C 148.451 186.53 149.117 184.666 150.274 183.176 C 151.118 182.163 152.21 181.345 153.491 180.842 L 163.755 176.809 C 164.291 176.599 164.898 176.861 165.107 177.397 C 165.317 177.933 165.056 178.541 164.519 178.75 L 154.256 182.784 C 153.445 183.104 152.733 183.594 152.151 184.196 L 162.584 187.961 C 163.081 188.138 163.605 188.229 164.133 188.229 C 164.663 188.229 165.186 188.138 165.683 187.961 L 184.027 181.359 C 184.648 181.136 185.06 180.542 185.06 179.882 C 185.06 179.221 184.648 178.632 184.027 178.404 L 165.689 171.781 C 165.192 171.604 164.67 171.513 164.141 171.513 Z M 151.589 196.094 C 151.589 198.401 157.21 200.8 164.141 200.8 C 171.07 200.8 176.692 198.401 176.692 196.094 L 175.692 186.589 L 166.396 189.948 C 165.67 190.21 164.906 190.34 164.141 190.34 C 163.376 190.34 162.604 190.21 161.885 189.948 L 152.589 186.589 L 151.589 196.094 Z"/>
+</svg>
