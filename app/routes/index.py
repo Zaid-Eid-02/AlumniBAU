@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, session
+from flask import Blueprint, redirect, session
 from app.utils import login_required
 
 bp = Blueprint("index", __name__)

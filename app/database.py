@@ -1,6 +1,5 @@
 import sqlite3, os, sys
 from werkzeug.security import generate_password_hash
-import app
 from app.config import USERNAME, PASSWORD, DEBUG
 
 
