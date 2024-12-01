@@ -62,8 +62,9 @@ class Database:
                 generate_password_hash(PASSWORD),
             )
             self.execute(
-                "INSERT INTO admins (id, announce, alumni_data, mod) VALUES (?, ?, ?, ?);",
+                "INSERT INTO admins (id, manage, announce, alumni_data, mod) VALUES (?, ?, ?, ?, ?);",
                 id,
+                1,
                 1,
                 1,
                 1,

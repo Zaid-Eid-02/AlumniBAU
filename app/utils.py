@@ -24,7 +24,7 @@ def manager_required(f):
 
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if session.get("user_id") != 1:
+        if repo.is_manager(session.get("user_id")):
             return redirect("/")
         return f(*args, **kwargs)
 

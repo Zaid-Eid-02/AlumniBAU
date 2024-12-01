@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, send_file
+from flask import Blueprint, render_template
 from app.utils import manager_required
 from app.forms.upload_alumni import UploadAlumniForm
 from app.repo import repo

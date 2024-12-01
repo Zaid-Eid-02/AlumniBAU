@@ -92,7 +92,9 @@ function closeFlash() {
 function highlightTab(tabNo) {
     const navbarTabs = document.querySelectorAll('.navbar-tab');
     navbarTabs[tabNo].classList.add('highlight');
+    navbarTabs[tabNo].querySelector('img').src = navbarTabs[tabNo].querySelector('img').src.replace('.svg', '-solid.svg');
     navbarTabs[tabNo + 3 + {{1 if session["user_id"] == 1 else 0}}].classList.add('highlight');
+    navbarTabs[tabNo + 3 + {{1 if session["user_id"] == 1 else 0}}].querySelector('img').src = navbarTabs[tabNo + 3 + {{1 if session["user_id"] == 1 else 0}}].querySelector('img').src.replace('.svg', '-solid.svg');
 }
 highlightTab({{ tab_number }});
 </script>

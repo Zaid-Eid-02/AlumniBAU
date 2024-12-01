@@ -13,10 +13,11 @@ CREATE TABLE users (
 CREATE TABLE admins (
     id INTEGER PRIMARY KEY,
     name TEXT,
-    announce BOOLEAN,
+    manage BOOLEAN DEFAULT 0,
+    announce BOOLEAN DEFAULT 0,
     news_count INTEGER DEFAULT 0,
-    alumni_data BOOLEAN,
-    mod BOOLEAN,
+    alumni_data BOOLEAN DEFAULT 0,
+    mod BOOLEAN DEFAULT 0,
     FOREIGN KEY (id) REFERENCES users(id)
 );
 

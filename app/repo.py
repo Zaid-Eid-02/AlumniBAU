@@ -53,7 +53,7 @@ class repo:
     @staticmethod
     def is_admin(id):
         return repo.get_admins(id)
-    
+
     @staticmethod
     def get_all_alumni():
         return db.execute("SELECT * FROM alumni")
@@ -69,6 +69,14 @@ class repo:
     @staticmethod
     def get_stats():
         return db.execute("SELECT * FROM stats")[0]
+
+    @staticmethod
+    def is_manager(id):
+        return (
+            False
+            if not repo.is_admin(id)
+            else db.execute("SELECT manage FROM admins WHERE id = ?;", id)
+        )
 
     @staticmethod
     def is_data_access(id):
