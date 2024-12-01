@@ -1,4 +1,3 @@
-from re import S
 import sqlite3, os, sys
 from werkzeug.security import generate_password_hash
 from app.config import DATABASE, SCHEMA, DEBUG, USERNAME, PASSWORD

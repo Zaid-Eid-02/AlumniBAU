@@ -182,3 +182,4 @@ work
             for i, row in enumerate(reader)
         ]
         db.execute_many(query, params)
+        return len(params)
