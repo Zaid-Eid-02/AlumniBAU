@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template
 from app.utils import manager_required
 from app.forms.upload_alumni import UploadAlumniForm
+from app.forms.file_path import filePathForm
 from app.repo import repo
 
 bp = Blueprint("manage", __name__)
@@ -23,3 +24,14 @@ def upload():
         count = repo.add_alumni(file_content)
         message = f"Successfully added {count} alumni"
     return render_template("admin/upload.jinja", form=form, message=message)
+
+
+@bp.route("/hash", methods=["GET", "POST"])
+def hash():
+    form = filePathForm()
+    message = ""
+    if form.validate_on_submit():
+        file_path = form.filename.data
+        repo.hash_file(file_path)
+        message = f"Successfully hashed {file_path}"
+    return render_template("admin/hash.jinja", form=form, message=message)

@@ -1,6 +1,9 @@
 {% macro render_field(field) %}
-  {# {{ field.label }} #}
+  {% if field.type not in ['BooleanField', 'SubmitField', 'CSRFTokenField'] %}
+    {{ field.label }}<br>
+  {% endif %}
   {{ field(**kwargs)|safe }}
+  {{ field.description }}
   {% if field.errors %}
     <ul class=errors>
     {% for error in field.errors %}
@@ -8,4 +11,11 @@
     {% endfor %}
     </ul>
   {% endif %}
+{% endmacro %}
+
+{% macro render_form(form) %}
+{{ form.hidden_tag() }}
+    {% for field in form %}
+        {{ render_field(field) }}
+    {% endfor %}
 {% endmacro %}

@@ -2,7 +2,7 @@ form {
     background-color: #fff;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     overflow: hidden;
     margin-left: auto;
     margin-right: auto;
@@ -91,13 +91,12 @@ input:user-valid {
     color: #6B7280;
     font-size: 0.875rem;
     line-height: 1.25rem;
-    min-width: 120px;
-    margin-right: 40%;
+    cursor: pointer;
+    width: 1rem;
 }
 
-#eye > input {
-    width: initial;
-    cursor: pointer;
+form > span {
+    transform: translate(1.5rem, -1.5rem);
 }
 
 @media (max-width: 768px) {

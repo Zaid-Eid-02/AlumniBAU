@@ -1,16 +1,9 @@
 {% extends "layout.jinja" %}
-{% from "_formhelpers.jinja" import render_field %}
+{% from "_formhelpers.jinja" import render_form %}
 {% block main %}
 <link href="/static/styles/auth.css" rel="stylesheet">
 <form action="/login" method="post">
     <p class="form-title">Sign in</p>
-    {{ form.hidden_tag() }}
-    {{ render_field(form.username, placeholder="Enter username", autofocus=true) }}
-    {{ render_field(form.password, placeholder="Enter password", id="password") }}
-    <div id="eye">
-        <input type="checkbox" onclick="if(password.type=='text')password.type='password';else password.type='text';"/>
-        <span> Show password</span>
-    </div>
-    {{ render_field(form.submit, class="submit") }}
+    {{ render_form(form) }}
 </form>
 {% endblock %}
