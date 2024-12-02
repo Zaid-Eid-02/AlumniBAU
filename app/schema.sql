@@ -84,7 +84,7 @@ CREATE TABLE alumni (
     FOREIGN KEY (major_id) REFERENCES majors(id),
     FOREIGN KEY (martial_status_id) REFERENCES martial_status(id),
     FOREIGN KEY (degree_id) REFERENCES degree(id),
-    FOREIGN KEY (ssn_hash) REFERENCES users(password_hash)
+    FOREIGN KEY (nno_hash) REFERENCES users(password_hash)
 );
 
 CREATE TABLE alumni_posts (
@@ -234,7 +234,7 @@ CREATE TABLE stats (
 INSERT INTO stats DEFAULT VALUES;
 
 CREATE TRIGGER add_alumni_stats AFTER INSERT ON alumni BEGIN
-    INSERT INTO users (id, username, password_hash) VALUES (NEW.id, NEW.student_id, NEW.ssn_hash);
+    INSERT INTO users (id, username, password_hash) VALUES (NEW.id, NEW.student_id, NEW.nno_hash);
     UPDATE stats SET alumni_count = alumni_count + 1;
 
     -- gender

@@ -31,7 +31,7 @@ def hash():
     form = filePathForm()
     message = ""
     if form.validate_on_submit():
-        file_path = form.filename.data
+        file_path = form.file_path.data
         repo.hash_file(file_path)
         message = f"Successfully hashed {file_path}"
     return render_template("admin/hash.jinja", form=form, message=message)

@@ -135,7 +135,7 @@ id,
 student_id,
 full_name,
 nationality,
-ssn_hash,
+nno_hash,
 gender,
 GPA,
 major_id,
@@ -161,7 +161,7 @@ work
                 row[0],  # student_id
                 row[1],  # full_name
                 row[2],  # nationality
-                row[3],  # ssn_hash
+                row[3],  # nno_hash
                 0 if row[4] == "ذكر" else 1,  # gender
                 int(float(row[5]) * 100),  # GPA
                 majors[row[6]],  # major_id
@@ -186,8 +186,13 @@ work
 
     @staticmethod
     def hash_file(file_path):
+        rows = []
         with open(file_path, "r") as file:
             reader = csv.reader(file)
-            next(reader)  # Skip header
+            rows.append(next(reader))  # header
             for row in reader:
                 row[3] = generate_password_hash(row[3])
+                rows.append(row)
+        with open(file_path, "w") as file:
+            writer = csv.writer(file)
+            writer.writerows(rows)
