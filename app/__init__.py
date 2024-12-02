@@ -11,6 +11,7 @@ def create_app():
     csrf = CSRFProtect()
     csrf.init_app(app)
     app.config.from_pyfile("config.py")
+    app.jinja_env.filters["title"] = lambda x: x.replace("_", " ").title()
 
     for blueprint in [
         index,

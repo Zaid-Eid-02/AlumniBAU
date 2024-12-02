@@ -45,8 +45,8 @@ CREATE TABLE alumni (
     id INTEGER PRIMARY KEY,
 
     -- constants
-    student_id INTEGER NOT NULL,
-    ssn_hash TEXT NOT NULL,
+    student_id INTEGER NOT NULL UNIQUE,
+    nno_hash TEXT NOT NULL,
     full_name TEXT,
     nationality TEXT,
     gender BOOLEAN,
@@ -179,6 +179,10 @@ CREATE TABLE stats (
     male_count INTEGER DEFAULT 0,
     female_count INTEGER DEFAULT 0,
 
+    -- work sector
+    public_sector_count INTEGER DEFAULT 0,
+    private_sector_count INTEGER DEFAULT 0,
+
     survey_submitted_count INTEGER DEFAULT 0,
     follow_count INTEGER DEFAULT 0,
     club_count INTEGER DEFAULT 0,
@@ -186,14 +190,12 @@ CREATE TABLE stats (
 
     -- pie charts --
 
-    -- work
+    -- work status
     work_count INTEGER DEFAULT 0,
     never_worked_count INTEGER DEFAULT 0,
     unspecified_work_count INTEGER DEFAULT 0,
-    public_sector_count INTEGER DEFAULT 0,
-    private_sector_count INTEGER DEFAULT 0,
 
-    -- GPA
+    -- ratings
     excellent_count INTEGER DEFAULT 0,
     very_good_count INTEGER DEFAULT 0,
     good_count INTEGER DEFAULT 0,
@@ -242,6 +244,10 @@ CREATE TRIGGER add_alumni_stats AFTER INSERT ON alumni BEGIN
     -- work
     UPDATE stats SET work_count = work_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND work = 1);
     UPDATE stats SET unspecified_work_count = unspecified_work_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND work IS NULL);
+
+    -- work sector
+    UPDATE stats SET public_sector_count = public_sector_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND public_sector = 1);
+    UPDATE stats SET private_sector_count = private_sector_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND public_sector = 0);
 
     -- postgrad
     UPDATE stats SET postgrad_count = postgrad_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND postgrad = 1);

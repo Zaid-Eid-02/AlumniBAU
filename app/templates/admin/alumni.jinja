@@ -3,8 +3,11 @@
 {% set title = "Data Table"%}
 {% block main %}
 <link rel="stylesheet" href="static/styles/table.css">
-<h2>Alumni</h2><button onclick="window.location.href='/alumni'">Reset Filters</button>
+<script src="static/scripts/TableFilter/tablefilter.js"></script>
+<h2>Alumni</h2><a href="/alumni"><button>Reset Filters</button></a>
 {% if alumni %}
+{% set majors = ["Computer Science", "Software Engineering", "Information Systems", "Computer Graphics", "Information Security"] %}
+{% set degrees = ["Bachelors", "Master Thesis", "Master Comprehensive"]%}
 <div class="table-container" style="max-width: 1220px;">
     <table class="sortable">
         <thead>
@@ -12,6 +15,9 @@
                 <th scope="col" class="sort">Student Id</th>
                 <th class="sorttable_nosort name">Full Name</th>
                 <th scope="col" class="sort">Graduation Year</th>
+                <th class="sorttable_nosort major">Major</th>
+                <th class="sorttable_nosort degree">Degree</th>
+                <th scope="col" class="sort">GPA</th>
             </tr>
         </thead>
         <tbody>
@@ -20,13 +26,36 @@
                 <td>{{ alumnus.student_id }}</td>
                 <td>{{ alumnus.full_name }}</td>
                 <td>{{ alumnus.graduation_year }}</td>
+                <td>{{ majors[alumnus.major_id - 1] }}</td>
+                <td>{{ degrees[alumnus.degree_id - 1] }}</td>
+                <td>{{ alumnus.GPA / 100 }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
-<script src="static/scripts/Sortable/sorttable.js" defer></script>
-<script src="static/scripts/TableFilter/tablefilter.js" defer></script>
+<script data-config>
+    // TableFilter settings
+    var tfConfig = {
+        base_path: "static/scripts/TableFilter/",
+        col_0: "none",
+        col_2: "none",
+        col_3: "select",
+        col_4: "select",
+        col_5: "none",
+        popup_filters: true,
+        mark_active_columns: true,
+        highlight_keywords: true,
+        themes: [{
+            name: 'transparent'
+        }],
+    };
+
+    // Instantiate TableFilter
+    var tf = new TableFilter(document.querySelector("table"), tfConfig);
+    tf.init();
+</script>
+<script src="static/scripts/Sortable/sorttable.js"></script>
 {% else %}
 there's no Alumni.
 {% endif %}

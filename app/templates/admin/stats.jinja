@@ -20,23 +20,15 @@
     <canvas id="graduation_year"></canvas>
     <canvas id="gender"></canvas>
     <canvas id="rating"></canvas>
+    <canvas id="majors"></canvas>
+    <canvas id="degrees"></canvas>
+    <canvas id="graduation_semester"></canvas>
+    <canvas id="work_status"></canvas>
+    <canvas id="martial_status"></canvas>
+    <canvas id="postgrad"></canvas>
+    <canvas id="sector"></canvas>
 </div>
 <script>
-    {# var alumni = document.getElementById("alumni");
-    alumni.style.cursor = "pointer";
-    alumni.onclick = function() {
-        window.location.href = "/alumni";
-    };
-    var news = document.getElementById("news");
-    news.style.cursor = "pointer";
-    news.onclick = function() {
-        window.location.href = "/news";
-    };
-    var posts = document.getElementById("posts");
-    posts.style.cursor = "pointer";
-    posts.onclick = function() {
-        window.location.href = "/posts";
-    }; #}
     {% set years = ["2019", "2020", "2021", "2022", "2023"] %}
     var yearChart = new Chart(document.getElementById("graduation_year"), {
         type: 'bar',
@@ -92,10 +84,10 @@
         }
     });
     {% set ratings = ["excellent", "very_good", "good", "fair", "poor"] %}
-    var smokeChart = new Chart(document.getElementById("rating"), {
+    var ratingChart = new Chart(document.getElementById("rating"), {
         type: 'pie',
         data: {
-            labels: {{ratings}},
+            labels: [{% for rating in ratings %}"{{rating|title}}", {% endfor %}],
             datasets: [{
                 data: [
                     {% for rating in ratings %}
@@ -124,6 +116,233 @@
             }
         }
     }
+    });
+    {% set majors = ["computer_science", "software_engineering", "information_systems", "computer_graphics", "information_security"] %}
+    var majorsChart = new Chart(document.getElementById("majors"), {
+        type: 'pie',
+        data: {
+            labels: [{% for major in majors %}"{{major|title}}", {% endfor %}],
+            datasets: [{
+                data: [
+                    {% for major in majors %}
+                        {{stats[major + "_count"]}},
+                    {% endfor %}
+                ],
+                backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4bc0c0", "#ff9f40"],
+            }]
+        },
+    options: {
+        responsive: true,
+            plugins: {
+            title: {
+                display: true,
+                text: 'Majors Distribution',
+                font: {
+                    size: 18
+                }
+            },
+            legend: {
+                labels: {
+                    font: {
+                        size: 14
+                    }
+                }
+            }
+        }
+    }
+    });
+    {% set semesters = ["first_semester", "second_semester", "summer"] %}
+    var semestersChart = new Chart(document.getElementById("graduation_semester"), {
+        type: 'pie',
+        data: {
+            labels: [{% for semester in semesters %}"{{semester|title}}", {% endfor %}],
+            datasets: [{
+                data: [
+                    {% for semester in semesters %}
+                        {{stats[semester + "_count"]}},
+                    {% endfor %}
+                ],
+                backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+            }]
+        },
+    options: {
+        responsive: true,
+            plugins: {
+            title: {
+                display: true,
+                text: 'Majors Distribution',
+                font: {
+                    size: 18
+                }
+            },
+            legend: {
+                labels: {
+                    font: {
+                        size: 14
+                    }
+                }
+            }
+        }
+    }
+    });
+    {% set work_status = ["work", "never_worked", "unspecified_work"]%}
+    var workStatusChart = new Chart(document.getElementById("work_status"), {
+        type: 'pie',
+        data: {
+            labels: [{% for status in work_status %}"{{status|title}}", {% endfor %}],
+            datasets: [{
+                data: [
+                    {% for status in work_status %}
+                        {{stats[status + "_count"]}},
+                    {% endfor %}
+                ],
+                backgroundColor: ["#36A2EB", "#FF6384", "#aaaaaa"],
+            }]
+        },
+    options: {
+        responsive: true,
+            plugins: {
+            title: {
+                display: true,
+                text: 'Work Status',
+                font: {
+                    size: 18
+                }
+            },
+            legend: {
+                labels: {
+                    font: {
+                        size: 14
+                    }
+                }
+            }
+        }
+    }
+    });
+    {% set degrees = ["bachelor", "master_thesis", "master_comprehensive"]%}
+    var degreesChart = new Chart(document.getElementById("degrees"), {
+        type: 'pie',
+        data: {
+            labels: [{% for degree in degrees %}"{{degree|title}}", {% endfor %}],
+            datasets: [{
+                data: [
+                    {% for degree in degrees %}
+                        {{stats[degree + "_count"]}},
+                    {% endfor %}
+                ],
+                backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+            }]
+        },
+    options: {
+        responsive: true,
+            plugins: {
+            title: {
+                display: true,
+                text: 'Degrees Distribution',
+                font: {
+                    size: 18
+                }
+            },
+            legend: {
+                labels: {
+                    font: {
+                        size: 14
+                    }
+                }
+            }
+        }
+    }
+    });
+    {% set martial_status = ["married", "single", "divorced", "widowed"]%}
+    var martialStatusChart = new Chart(document.getElementById("martial_status"), {
+        type: 'pie',
+        data: {
+            labels: [{% for status in martial_status %}"{{status|title}}", {% endfor %}],
+            datasets: [{
+                data: [
+                    {% for status in martial_status %}
+                        {{stats[status + "_count"]}},
+                    {% endfor %}
+                ],
+                backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4bc0c0"],
+            }]
+        },
+    options: {
+        responsive: true,
+            plugins: {
+            title: {
+                display: true,
+                text: 'Martial Status',
+                font: {
+                    size: 18
+                }
+            },
+            legend: {
+                labels: {
+                    font: {
+                        size: 14
+                    }
+                }
+            }
+        }
+    }
+    });
+    {% set postgrad = ["postgrad", "no_postgrad", "postgrad_unspecified"]%}
+    var postgradChart = new Chart(document.getElementById("postgrad"), {
+        type: 'pie',
+        data: {
+            labels: [{% for status in postgrad %}"{{status|title}}", {% endfor %}],
+            datasets: [{
+                data: [
+                    {% for status in postgrad %}
+                        {{stats[status + "_count"]}},
+                    {% endfor %}
+                ],
+                backgroundColor: ["#36A2EB", "#FF6384", "#aaaaaa"],
+            }]
+        },
+    options: {
+        responsive: true,
+            plugins: {
+            title: {
+                display: true,
+                text: 'Postgraduate Studies',
+                font: {
+                    size: 18
+                }
+            },
+            legend: {
+                labels: {
+                    font: {
+                        size: 14
+                    }
+                }
+            }
+        }
+    }
+    });
+    var sectorChart = new Chart(document.getElementById("sector"), {
+        type: 'doughnut',
+        data: {
+            labels: ["Public", "Private"],
+            datasets: [{
+                data: [{{ stats.public_sector_count }}, {{ stats.private_sector_count }}],
+                backgroundColor: ["#36A2EB", "#FF6384"],
+            }]
+        },
+        options: {
+            responsive: true,
+            cutout: "80%",
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Work Sector',
+                    font: {
+                        size: 18
+                    }
+                }
+            }
+        }
     });
 </script>
 {% endblock %}
