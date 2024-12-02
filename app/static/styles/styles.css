@@ -43,6 +43,7 @@ main {
 }
 
 .navbar {
+    z-index: 10;
     position: fixed !important;
     border-radius: 1rem;
     top: 0;
@@ -71,6 +72,7 @@ main {
     background-color: #d1ffcf;
     border: 1px solid #a5fe9e;
     padding: 10px 15px;
+    z-index: 10;
 }
 
 .navbar-logo {

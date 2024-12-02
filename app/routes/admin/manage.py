@@ -10,7 +10,7 @@ bp = Blueprint("manage", __name__)
 @bp.route("/manage")
 @manager_required
 def manage():
-    return render_template("admin/manage.jinja")
+    return render_template("admin/manage/manage.jinja")
 
 
 @bp.route("/upload", methods=["GET", "POST"])
@@ -23,7 +23,7 @@ def upload():
         file_content = file.read().decode("utf-8")
         count = repo.add_alumni(file_content)
         message = f"Successfully added {count} alumni"
-    return render_template("admin/upload.jinja", form=form, message=message)
+    return render_template("admin/manage/upload.jinja", form=form, message=message)
 
 
 @bp.route("/hash", methods=["GET", "POST"])
@@ -34,4 +34,4 @@ def hash():
         file_path = form.file_path.data
         repo.hash_file(file_path)
         message = f"Successfully hashed {file_path}"
-    return render_template("admin/hash.jinja", form=form, message=message)
+    return render_template("admin/manage/hash.jinja", form=form, message=message)

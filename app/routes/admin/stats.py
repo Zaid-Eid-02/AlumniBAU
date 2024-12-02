@@ -9,11 +9,11 @@ bp = Blueprint("stats", __name__)
 @data_access_required
 def stats():
     stats = repo.get_stats()
-    return render_template("admin/stats.jinja", stats=stats)
+    return render_template("admin/stats/stats.jinja", stats=stats)
 
 
 @bp.route("/alumni")
 @data_access_required
 def alumni():
     alumni = repo.get_all_alumni()
-    return render_template("admin/alumni.jinja", alumni=alumni)
+    return render_template("admin/stats/alumni.jinja", alumni=alumni)
