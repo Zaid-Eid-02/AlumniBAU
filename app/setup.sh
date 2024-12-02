@@ -1,5 +1,5 @@
 git clone https://github.com/Om4r37/AlumniBAU.git
-cd AlumniBAU/
+cd AlumniBAU/app/
 touch config.py
 echo "# change before deployment
 DATABASE = 'database.db'
@@ -9,6 +9,7 @@ SECRET_KEY = 'development key'
 USERNAME = 'admin'
 PASSWORD = 'default'
 PORT = 1337" >> config.py
+cd ..
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r app/requirements.txt
