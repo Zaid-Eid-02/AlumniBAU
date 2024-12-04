@@ -12,6 +12,10 @@ form {
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
+form > * {
+    margin-left: 0.5rem !important;
+}
+
 .form-title {
     font-size: 1.25rem;
     line-height: 1.75rem;
@@ -41,7 +45,6 @@ input {
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     width: 90%;
     max-width: 300px;
-    overflow-y: scroll;
 }
 
 .submit {
@@ -59,6 +62,8 @@ input {
     margin-top: 1rem;
     border: none;
     cursor: pointer;
+    margin-left: 50% !important;
+    transform: translateX(-50%);
 }
 
 .signup-link {
@@ -107,18 +112,4 @@ form > span {
 
 body {
     background-color: #f1f6e6;
-}
-
-.navbar {
-    display: none;
-}
-
-img {
-    max-width: 22rem;
-    margin-left: 50%;
-    transform: translateX(-50%);
-}
-
-h1 {
-    color: #177b35;
 }

@@ -1,16 +1,17 @@
 {% macro render_field(field) %}
-  {% if field.type not in ['BooleanField', 'SubmitField', 'CSRFTokenField'] %}
-    {{ field.label }}<br>
-  {% endif %}
-  {{ field(**kwargs)|safe }}
-  {{ field.description }}
-  {% if field.errors %}
-    <ul class=errors>
-    {% for error in field.errors %}
-      <li>{{ error }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
+    {% if field.type not in ['BooleanField', 'SubmitField', 'CSRFTokenField'] %}
+        {{ field.label }}<br>
+    {% endif %}
+    {{ field(**kwargs)|safe }}
+    {% if field.type not in ['BooleanField', 'SubmitField', 'CSRFTokenField'] %}<br>{% endif %}
+    {{ field.description }}
+    {% if field.errors %}
+        <ul class=errors>
+        {% for error in field.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
 {% endmacro %}
 
 {% macro render_form(form) %}

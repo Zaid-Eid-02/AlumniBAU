@@ -14,7 +14,6 @@ class LoginForm(FlaskForm):
         validators=[InputRequired(), Length(min=1, max=100)],
         render_kw={"placeholder": "Enter your password", "id": "password"},
     )
-
     show_password = BooleanField(
         "Show Password",
         description="<span>Show Password</span>",
@@ -23,5 +22,4 @@ class LoginForm(FlaskForm):
             "id": "eye",
         },
     )
-
     submit = SubmitField("Login", render_kw={"class": "submit"})
