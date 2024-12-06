@@ -77,17 +77,17 @@ class repo:
         
 
     @staticmethod
-    def is_data_access(username):
+    def has_data_access(username):
         return repo.get_admin(username)["alumni_data"]
         
 
     @staticmethod
-    def is_announce_access(username):
+    def is_announcer(username):
         return repo.get_admin(username)["announce"]
         
 
     @staticmethod
-    def is_mod_permission(username):
+    def is_mod(username):
         return repo.get_admin(username)["mod"]
         
 

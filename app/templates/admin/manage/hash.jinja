@@ -1,6 +1,6 @@
 {% extends "layout.jinja" %}
 {% from "_formhelpers.jinja" import render_field %}
-{% set tab_number = 1 %}
+{% set highlight_tab = "manage" %}
 {% block main %}
 <form action="/hash" method="post">
     <a href="/static/example.csv" target="_blank">Download Example CSV</a><br>

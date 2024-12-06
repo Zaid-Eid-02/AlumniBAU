@@ -1,3 +1,4 @@
+import re
 from flask import Blueprint, render_template, redirect, request, session, flash
 from app.forms.login import LoginForm
 from werkzeug.security import check_password_hash
@@ -27,6 +28,12 @@ def login():
     if len(rows) and check_password_hash(rows[0]["password_hash"], password):
         session["id"] = rows[0]["id"]
         session["username"] = rows[0]["username"]
+        if role == "Admin":
+            session["admin"] = True
+            session["manager"] = repo.is_manager(session["username"])
+            session["announcer"] = repo.is_announcer(session["username"])
+            session["alumni_data_access"] = repo.has_data_access(session["username"])
+            session["mod_permissions"] = repo.is_mod(session["username"])
         flash("Logged in as " + session["username"], "success")
         return redirect("/")
 

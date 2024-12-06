@@ -1,0 +1,12 @@
+{% from 'nav.jinja' import tabs %}
+<script>
+function highlightTab(tabNo) {
+    const navbarTabs = document.querySelectorAll('.navbar-tab');
+    const navTabs = document.querySelectorAll('.nav-tab');
+    navbarTabs[tabNo].classList.add('highlight');
+    navbarTabs[tabNo].querySelector('img').src = navbarTabs[tabNo].querySelector('img').src.replace('outline.svg', 'solid.svg');
+    navTabs[tabNo].classList.add('highlight');
+    navTabs[tabNo].querySelector('img').src = navbarTabs[tabNo].querySelector('img').src.replace('outline.svg', 'solid.svg');
+}
+highlightTab({{ tabs.index(highlight_tab) }});
+</script>

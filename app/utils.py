@@ -52,21 +52,21 @@ def data_access_required(f):
 
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if not repo.is_data_access(session.get("username")):
+        if not repo.has_data_access(session.get("username")):
             return redirect("/")
         return f(*args, **kwargs)
 
     return decorated_function
 
 
-def announce_access_required(f):
+def announcer_required(f):
     """
     Decorate routes to require access to announcements.
     """
 
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if not repo.is_announce_access(session.get("username")):
+        if not repo.is_announcer(session.get("username")):
             return redirect("/")
         return f(*args, **kwargs)
 
@@ -80,7 +80,7 @@ def mod_permission_required(f):
 
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if not repo.is_mod_permission(session.get("username")):
+        if not repo.is_mod(session.get("username")):
             return redirect("/")
         return f(*args, **kwargs)
 

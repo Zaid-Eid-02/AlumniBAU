@@ -1,0 +1,40 @@
+{% set tabs = [] %}
+{% if session["alumni_data_access"] %}
+    {% set tabs = tabs + ["stats"] %}
+{% endif %}
+{% if session["manager"] %}
+    {% set tabs = tabs + ["manage"] %}
+{% endif %}
+{% if not session["admin"] %}
+    {% set tabs = tabs + ["survey"] %}
+{% endif %}
+{% set tabs = tabs + ["news"] %}
+{% set tabs = tabs + ["posts"] %}
+<div class="navbar">
+    <div class="navbar-logo"><img src="/static/pics/logo/logo.svg">
+        <span> BAU Alumni</span>
+    </div>
+    {% if session["id"] %}
+    <ul class="navbar-tabs">
+        {% for tab in tabs %}
+            <a class="navbar-tab" href="/{{tab}}">
+                <img src="/static/pics/icons/{{tab}}-outline.svg" class="white tab-icon">&nbsp;{{tab|capitalize}}
+            </a>
+        {% endfor %}
+    </ul>
+    <a class="logout" href="/logout">Log Out</a>
+    {% endif %}
+</div>
+{% if session["id"] %}
+<div class="center">
+    <div class="tab-bar">
+        {% for tab in tabs %}
+            <a class="navbar-tab nav-tab" href="/{{tab}}">
+                <span>
+                    <img src="/static/pics/icons/{{tab}}-outline.svg" class="white tab-icon">
+                </span>{{tab|capitalize}}
+            </a>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
