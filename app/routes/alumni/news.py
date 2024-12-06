@@ -9,6 +9,6 @@ bp = Blueprint("news", __name__)
 def news():
     return (
         redirect("/announce")
-        if session["user_id"] == 1
+        if session["id"] == 1
         else render_template("alumni/news.jinja")
     )

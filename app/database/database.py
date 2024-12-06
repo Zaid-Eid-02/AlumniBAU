@@ -57,13 +57,13 @@ class Database:
             conn.executescript(schema)
             conn.commit()
             id = self.execute(
-                "INSERT INTO users (username, password_hash) VALUES (?, ?);",
-                USERNAME,
-                generate_password_hash(PASSWORD),
+                "INSERT INTO users DEFAULT VALUES;",
             )
             self.execute(
-                "INSERT INTO admins (id, manage, announce, alumni_data, mod) VALUES (?, ?, ?, ?, ?);",
+                "INSERT INTO admins (id, username, password_hash, manage, announce, alumni_data, mod) VALUES (?, ?, ?, ?, ?, ?, ?);",
                 id,
+                USERNAME,
+                generate_password_hash(PASSWORD),
                 1,
                 1,
                 1,

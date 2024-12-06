@@ -1,5 +1,5 @@
 {% macro render_field(field) %}
-    {% if field.type not in ['BooleanField', 'SubmitField', 'CSRFTokenField'] %}
+    {% if field.type not in ['BooleanField', 'SubmitField', 'CSRFTokenField', 'RadioField'] %}
         {{ field.label }}<br>
     {% endif %}
     {{ field(**kwargs)|safe }}

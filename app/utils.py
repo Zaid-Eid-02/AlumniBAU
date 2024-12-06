@@ -1,6 +1,6 @@
 from functools import wraps
 from flask import redirect, session
-from app.repo import repo
+from app.database.repo import repo
 
 
 def login_required(f):
@@ -10,7 +10,7 @@ def login_required(f):
 
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if session.get("user_id") is None:
+        if session.get("id") is None:
             return redirect("/login")
         return f(*args, **kwargs)
 
@@ -24,7 +24,7 @@ def manager_required(f):
 
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if not repo.is_manager(session.get("user_id")):
+        if not repo.is_manager(session.get("username")):
             return redirect("/")
         return f(*args, **kwargs)
 
@@ -38,7 +38,7 @@ def admin_required(f):
 
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if not repo.is_admin(session.get("user_id")):
+        if not repo.is_admin(session.get("username")):
             return redirect("/")
         return f(*args, **kwargs)
 
@@ -52,7 +52,7 @@ def data_access_required(f):
 
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if not repo.is_data_access(session.get("user_id")):
+        if not repo.is_data_access(session.get("username")):
             return redirect("/")
         return f(*args, **kwargs)
 
@@ -66,7 +66,7 @@ def announce_access_required(f):
 
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if not repo.is_announce_access(session.get("user_id")):
+        if not repo.is_announce_access(session.get("username")):
             return redirect("/")
         return f(*args, **kwargs)
 
@@ -80,7 +80,7 @@ def mod_permission_required(f):
 
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if not repo.is_mod_permission(session.get("user_id")):
+        if not repo.is_mod_permission(session.get("username")):
             return redirect("/")
         return f(*args, **kwargs)
 

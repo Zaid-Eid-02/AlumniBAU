@@ -1,4 +1,4 @@
-from app.database import db
+from app.database.database import db
 from werkzeug.security import generate_password_hash
 from io import StringIO
 import csv
@@ -6,38 +6,20 @@ import csv
 
 class repo:
     @staticmethod
-    def add_user(username, password):
-        return db.execute(
-            "INSERT INTO users (username, password_hash) VALUES (?, ?);",
-            username,
-            generate_password_hash(password),
-        )
-
-    @staticmethod
     def get_last_user_id():
         return db.execute("SELECT id FROM users ORDER BY id DESC LIMIT 1;")[0]["id"]
-
-    @staticmethod
-    def get_user(username):
-        return db.execute("SELECT * FROM users WHERE username = ?;", username)[0]
-
-    @staticmethod
-    def get_users(username):
-        return db.execute("SELECT * FROM users WHERE username = ?;", username)
 
     @staticmethod
     def get_all_users():
         return db.execute("SELECT * FROM users")
 
     @staticmethod
-    def is_user(username):
-        return repo.get_users(username)
-
-    @staticmethod
-    def add_admin(id, name, manage, announce, alumni_data, mod):
+    def add_admin(id, username, password, name, manage, announce, alumni_data, mod):
         return db.execute(
-            "INSERT INTO admins (id, mod, name, manage, announce, alumni_data) VALUES (?, ?, ?, ?, ?, ?);",
+            "INSERT INTO admins (id, username, password_hash, mod, name, manage, announce, alumni_data) VALUES (?, ?, ?, ?, ?, ?, ?, ?);",
             id,
+            username,
+            generate_password_hash(password),
             mod,
             name,
             manage,
@@ -46,21 +28,33 @@ class repo:
         )
 
     @staticmethod
-    def get_admin(id):
-        return db.execute("SELECT * FROM admins WHERE id = ?;", id)
+    def get_admin(username):
+        return db.execute("SELECT * FROM admins WHERE username = ?;", username)[0]
 
     @staticmethod
-    def get_admins(id):
-        return db.execute("SELECT * FROM admins WHERE id = ?;", id)
+    def get_admins(username):
+        return db.execute("SELECT * FROM admins WHERE username = ?;", username)
 
     @staticmethod
     def get_all_admins():
         return db.execute("SELECT * FROM admins")
 
     @staticmethod
-    def is_admin(id):
-        return repo.get_admins(id)
+    def is_admin(username):
+        return repo.get_admins(username)
 
+    @staticmethod
+    def get_alumnus(username):
+        return db.execute("SELECT * FROM alumni WHERE username = ?;", username)[0]
+    
+    @staticmethod
+    def get_alumni(username):
+        return db.execute("SELECT * FROM alumni WHERE username = ?;", username)
+    
+    @staticmethod
+    def is_alumni(username):
+        return repo.get_alumni(username)
+    
     @staticmethod
     def get_all_alumni():
         return db.execute("SELECT * FROM alumni")
@@ -78,42 +72,24 @@ class repo:
         return db.execute("SELECT * FROM stats")[0]
 
     @staticmethod
-    def is_manager(id):
-        return (
-            False
-            if not repo.is_admin(id)
-            else db.execute("SELECT manage FROM admins WHERE id = ?;", id)[0]["manage"]
-        )
+    def is_manager(username):
+        return repo.get_admin(username)["manage"]
+        
 
     @staticmethod
-    def is_data_access(id):
-        return (
-            False
-            if not repo.is_admin(id)
-            else db.execute("SELECT alumni_data FROM admins WHERE id = ?;", id)[0][
-                "alumni_data"
-            ]
-        )
+    def is_data_access(username):
+        return repo.get_admin(username)["alumni_data"]
+        
 
     @staticmethod
-    def is_announce_access(id):
-        return (
-            False
-            if not repo.is_admin(id)
-            else db.execute("SELECT announce FROM admins WHERE id = ?;", id)[0][
-                "announce"
-            ]
-        )
+    def is_announce_access(username):
+        return repo.get_admin(username)["announce"]
+        
 
     @staticmethod
-    def is_mod_permission(id):
-        return (
-            False
-            if not repo.is_admin(id)
-            else db.execute("SELECT mod_permission FROM admins WHERE id = ?;", id)[0][
-                "mod"
-            ]
-        )
+    def is_mod_permission(username):
+        return repo.get_admin(username)["mod"]
+        
 
     @staticmethod
     def add_alumni(csv_file):

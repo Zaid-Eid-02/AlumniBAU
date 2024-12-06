@@ -16,9 +16,9 @@
         <div class="navbar-logo"><img src="/static/pics/logo/logo.svg">
             <span> BAU Alumni</span>
         </div>
-        {% if session["user_id"] %}
+        {% if session["id"] %}
         <ul class="navbar-tabs">
-            {% if session["user_id"] == 1 %}
+            {% if session["id"] == 1 %}
             <a class="navbar-tab" href="/stats">
                 <img src="/static/pics/icons/stats.svg" class="white tab-icon">&nbsp;Stats
             </a>
@@ -39,10 +39,10 @@
         <a class="logout" href="/logout">Log Out</a>
         {% endif %}
     </div>
-    {% if session["user_id"] %}
+    {% if session["id"] %}
     <div class="center">
         <div class="tab-bar">
-            {% if session["user_id"] == 1 %}
+            {% if session["id"] == 1 %}
             <a class="navbar-tab" href="/stats">
                 <span>
                     <img src="/static/pics/icons/stats.svg" class="white tab-icon">
@@ -93,8 +93,8 @@ function highlightTab(tabNo) {
     const navbarTabs = document.querySelectorAll('.navbar-tab');
     navbarTabs[tabNo].classList.add('highlight');
     navbarTabs[tabNo].querySelector('img').src = navbarTabs[tabNo].querySelector('img').src.replace('.svg', '-solid.svg');
-    navbarTabs[tabNo + 3 + {{1 if session["user_id"] == 1 else 0}}].classList.add('highlight');
-    navbarTabs[tabNo + 3 + {{1 if session["user_id"] == 1 else 0}}].querySelector('img').src = navbarTabs[tabNo + 3 + {{1 if session["user_id"] == 1 else 0}}].querySelector('img').src.replace('.svg', '-solid.svg');
+    navbarTabs[tabNo + 3 + {{1 if session["id"] == 1 else 0}}].classList.add('highlight');
+    navbarTabs[tabNo + 3 + {{1 if session["id"] == 1 else 0}}].querySelector('img').src = navbarTabs[tabNo + 3 + {{1 if session["id"] == 1 else 0}}].querySelector('img').src.replace('.svg', '-solid.svg');
 }
 highlightTab({{ tab_number }});
 </script>

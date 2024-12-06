@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, request, session, flash
 from app.forms.login import LoginForm
 from werkzeug.security import check_password_hash
-from app.repo import repo
+from app.database.repo import repo
 
 bp = Blueprint("login", __name__)
 
@@ -20,14 +20,14 @@ def login():
         flash("Invalid credentials.", "danger")
         return render_template("auth/login.jinja", form=form)
 
+    role = form.role.data
     username = form.username.data
     password = form.password.data
-    rows = repo.get_users(username)
-
+    rows = (repo.get_admins if role == "Admin" else repo.get_alumni)(username)
     if len(rows) and check_password_hash(rows[0]["password_hash"], password):
-        session["user_id"] = rows[0]["id"]
-        session["user_name"] = rows[0]["username"]
-        flash("Logged in as " + session["user_name"], "success")
+        session["id"] = rows[0]["id"]
+        session["username"] = rows[0]["username"]
+        flash("Logged in as " + session["username"], "success")
         return redirect("/")
 
     flash("Invalid credentials.", "danger")

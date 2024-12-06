@@ -9,6 +9,6 @@ bp = Blueprint("posts", __name__)
 def posts():
     return (
         redirect("/mod")
-        if session["user_id"] == 1
+        if session["id"] == 1
         else render_template("alumni/posts.jinja")
     )

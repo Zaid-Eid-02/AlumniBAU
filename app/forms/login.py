@@ -1,9 +1,11 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, RadioField
 from wtforms.validators import InputRequired, Length
 
 
 class LoginForm(FlaskForm):
+    role = RadioField(choices=[("Alumni"), ("Admin")], default="Alumni", validators=[InputRequired()])
+
     username = StringField(
         "Username",
         validators=[InputRequired(), Length(min=1, max=50)],

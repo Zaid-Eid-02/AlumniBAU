@@ -9,7 +9,8 @@ main {
     text-align: center;
 }
 
-.navbar *, .tab-bar * {
+.navbar *,
+.tab-bar * {
     text-decoration: none;
     color: white;
 }
@@ -233,4 +234,21 @@ main {
 
 .tab-icon {
     height: 1rem;
+}
+
+::-moz-selection {
+    background: #00af437e;
+}
+
+::selection {
+    background: #00af437e;
+}
+
+input:focus {
+    border-color: #00af437e;
+    box-shadow: 0 0 0 4px #00ff6234;
+}
+
+input {
+    accent-color: #006226f5;
 }
