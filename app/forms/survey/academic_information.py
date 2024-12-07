@@ -4,4 +4,6 @@ from wtforms.validators import InputRequired, Length
 
 
 class AcademicInformationForm(FlaskForm):
-    full_name = StringField()
+    major = StringField(
+        render_kw={"disabled": True},
+    )
