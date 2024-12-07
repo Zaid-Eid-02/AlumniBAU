@@ -60,7 +60,7 @@ class Database:
                 "INSERT INTO users DEFAULT VALUES;",
             )
             self.execute(
-                "INSERT INTO admins (id, username, password_hash, manage, announce, alumni_data, mod) VALUES (?, ?, ?, ?, ?, ?, ?);",
+                "INSERT INTO admins (id, username, password_hash, manage, announce, stats, mod) VALUES (?, ?, ?, ?, ?, ?, ?);",
                 id,
                 USERNAME,
                 generate_password_hash(PASSWORD),

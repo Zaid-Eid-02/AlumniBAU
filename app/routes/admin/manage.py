@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template
 from app.utils import manager_required
-from app.forms.upload_alumni import UploadAlumniForm
-from app.forms.file_path import filePathForm
+from app.forms.manage.upload_alumni import UploadAlumniForm
+from app.forms.manage.file_path import filePathForm
 from app.database.repo import repo
 
 bp = Blueprint("manage", __name__)

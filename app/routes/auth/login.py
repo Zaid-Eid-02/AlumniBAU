@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, request, session, flash
-from app.forms.login import LoginForm
+from app.forms.auth.login import LoginForm
 from werkzeug.security import check_password_hash
 from app.database.repo import repo
 
@@ -26,15 +26,12 @@ def login():
     rows = (repo.get_admins if role == "Admin" else repo.get_alumni)(username)
     if len(rows) and check_password_hash(rows[0]["password_hash"], password):
         session["id"] = rows[0]["id"]
-        session["username"] = rows[0]["username"]
+        session["username"] = username
         session["role"] = "alumnus"
         if role == "Admin":
             session["role"] = "admin"
-            session["manager"] = repo.is_manager(session["username"])
-            session["announcer"] = repo.is_announcer(session["username"])
-            session["alumni_data_access"] = repo.has_data_access(session["username"])
-            session["mod_permissions"] = repo.is_mod(session["username"])
-        flash("Logged in as " + session["username"], "success")
+            session["perms"] = repo.get_perms(username)
+        flash("Logged in as " + username, "success")
         return redirect("/")
 
     flash("Invalid credentials.", "danger")

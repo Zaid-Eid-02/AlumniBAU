@@ -16,20 +16,6 @@ def login_required(f):
     return decorated_function
 
 
-def manager_required(f):
-    """
-    Decorate routes to require a manager account.
-    """
-
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if not session.get("manager"):
-            return redirect("/")
-        return f(*args, **kwargs)
-
-    return decorated_function
-
-
 def admin_required(f):
     """
     Decorate routes to require an admin account.
@@ -44,6 +30,20 @@ def admin_required(f):
     return decorated_function
 
 
+def manager_required(f):
+    """
+    Decorate routes to require a manager account.
+    """
+
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if "manage" not in session.get("perms"):
+            return redirect("/")
+        return f(*args, **kwargs)
+
+    return decorated_function
+
+
 def data_access_required(f):
     """
     Decorate routes to require access to info.
@@ -51,7 +51,7 @@ def data_access_required(f):
 
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if not session.get("alumni_data_access"):
+        if "stats" not in session.get("perms"):
             return redirect("/")
         return f(*args, **kwargs)
 
@@ -65,7 +65,7 @@ def announcer_required(f):
 
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if not session.get("announcer"):
+        if "announce" not in session.get("perms"):
             return redirect("/")
         return f(*args, **kwargs)
 
@@ -79,7 +79,7 @@ def mod_permission_required(f):
 
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if not session.get("mod_permissions"):
+        if "mod" not in session.get("perms"):
             return redirect("/")
         return f(*args, **kwargs)
 

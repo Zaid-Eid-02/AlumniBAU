@@ -9,6 +9,6 @@ bp = Blueprint("posts", __name__)
 def posts():
     return (
         redirect("/mod")
-        if session["role"] == "admin" and session["mod_permissions"]
+        if session.get("role") == "admin" and "mod" in session.get("perms")
         else render_template("alumni/posts.jinja")
     )

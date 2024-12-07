@@ -9,6 +9,6 @@ bp = Blueprint("news", __name__)
 def news():
     return (
         redirect("/announce")
-        if session["role"] == "admin" and session["announcer"]
+        if session.get("role") == "admin" and "announce" in session.get("perms")
         else render_template("alumni/news.jinja")
     )

@@ -1,15 +1,15 @@
 {% set tabs = [] %}
-{% if session.get("alumni_data_access") %}
-    {% set tabs = tabs + ["stats"] %}
-{% endif %}
-{% if session.get("manager") %}
-    {% set tabs = tabs + ["manage"] %}
-{% endif %}
-{% if session.get("role") == 'alumnus' %}
+{% if session.get("role") == "admin" %}
+    {% if "stats" in session.get("perms") %}
+        {% set tabs = tabs + ["stats"] %}
+    {% endif %}
+    {% if "manage" in session.get("perms") %}
+        {% set tabs = tabs + ["manage"] %}
+    {% endif %}
+{% else %}
     {% set tabs = tabs + ["survey"] %}
 {% endif %}
-{% set tabs = tabs + ["news"] %}
-{% set tabs = tabs + ["posts"] %}
+{% set tabs = tabs + ["news"] + ["posts"] %}
 <div class="navbar">
     <div class="navbar-logo"><img src="/static/pics/logo/logo.svg">
         <span> BAU Alumni</span>

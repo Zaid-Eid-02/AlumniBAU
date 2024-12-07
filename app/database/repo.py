@@ -1,3 +1,4 @@
+from math import perm
 from app.database.database import db
 from werkzeug.security import generate_password_hash
 from io import StringIO
@@ -46,15 +47,15 @@ class repo:
     @staticmethod
     def get_alumnus(username):
         return db.execute("SELECT * FROM alumni WHERE username = ?;", username)[0]
-    
+
     @staticmethod
     def get_alumni(username):
         return db.execute("SELECT * FROM alumni WHERE username = ?;", username)
-    
+
     @staticmethod
     def is_alumni(username):
         return repo.get_alumni(username)
-    
+
     @staticmethod
     def get_all_alumni():
         return db.execute("SELECT * FROM alumni")
@@ -72,24 +73,12 @@ class repo:
         return db.execute("SELECT * FROM stats")[0]
 
     @staticmethod
-    def is_manager(username):
-        return repo.get_admin(username)["manage"]
-        
-
-    @staticmethod
-    def has_data_access(username):
-        return repo.get_admin(username)["alumni_data"]
-        
-
-    @staticmethod
-    def is_announcer(username):
-        return repo.get_admin(username)["announce"]
-        
-
-    @staticmethod
-    def is_mod(username):
-        return repo.get_admin(username)["mod"]
-        
+    def get_perms(username):
+        admin = repo.get_admin(username)
+        return [
+            perm if admin[perm] else None
+            for perm in ["mod", "manage", "announce", "stats"]
+        ]
 
     @staticmethod
     def add_alumni(csv_file):

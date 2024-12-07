@@ -9,7 +9,8 @@ bp = Blueprint("index", __name__)
 @login_required
 def index():
     return redirect("/survey" if session.get("role") == "alumnus"
-                    else "/stats" if session.get("alumni_data_access")
-                    else "/manage" if session.get("manager")
-                    else "/announce" if session.get("announcer")
-                    else "/mod") # if session.get("mod_permissions")   
+                    else "/stats" if "stats" in session.get("perms")
+                    else "/manage" if "manage" in session.get("perms")
+                    else "/announce" if "announce" in session.get("perms")
+                    else "/mod" if "mod" in session.get("perms")
+                    else "/news")
