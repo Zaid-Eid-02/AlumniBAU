@@ -15,7 +15,6 @@
 {% endmacro %}
 
 {% macro render_form(form) %}
-{{ form.hidden_tag() }}
     {% for field in form %}
         {{ render_field(field) }}
     {% endfor %}

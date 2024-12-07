@@ -108,6 +108,8 @@ class repo:
         query = """
 INSERT INTO alumni (
 id,
+username,
+password_hash,
 student_id,
 full_name,
 nationality,
@@ -126,7 +128,7 @@ public_sector,
 work_phone,
 postgrad,
 work
-) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"""
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"""
         id = repo.get_last_user_id() + 1
         csv_data = StringIO(csv_file)
         reader = csv.reader(csv_data)
@@ -134,6 +136,8 @@ work
         params = [
             (
                 id + i,  # id
+                row[0],  # username
+                row[3],  # password_hash
                 row[0],  # student_id
                 row[1],  # full_name
                 row[2],  # nationality

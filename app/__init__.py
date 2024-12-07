@@ -28,6 +28,10 @@ def create_app():
     ]:
         app.register_blueprint(blueprint.bp)
 
+    # Disable caching
+    app.jinja_env.cache = None
+    app.config['TEMPLATES_AUTO_RELOAD'] = True
+
     @app.after_request
     def after_request(response):
         """Ensure responses aren't cached"""

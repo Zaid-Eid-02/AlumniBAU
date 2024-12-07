@@ -1,5 +1,5 @@
-{% extends "layout.jinja" %}
-{% from "_formhelpers.jinja" import render_field %}
+{% extends "layout/layout.jinja" %}
+{% from "form.jinja" import render_field %}
 {% set highlight_tab = "manage" %}
 {% block main %}
 <form action="/hash" method="post">

@@ -8,4 +8,8 @@ bp = Blueprint("index", __name__)
 @bp.route("/")
 @login_required
 def index():
-    return redirect("/stats" if repo.is_admin(session.get("username")) else "/survey")
+    return redirect("/survey" if session.get("role") == "alumnus"
+                    else "/stats" if session.get("alumni_data_access")
+                    else "/manage" if session.get("manager")
+                    else "/announce" if session.get("announcer")
+                    else "/mod") # if session.get("mod_permissions")   

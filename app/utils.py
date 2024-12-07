@@ -1,6 +1,5 @@
 from functools import wraps
 from flask import redirect, session
-from app.database.repo import repo
 
 
 def login_required(f):
@@ -24,7 +23,7 @@ def manager_required(f):
 
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if not repo.is_manager(session.get("username")):
+        if not session.get("manager"):
             return redirect("/")
         return f(*args, **kwargs)
 
@@ -38,7 +37,7 @@ def admin_required(f):
 
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if not repo.is_admin(session.get("username")):
+        if session.get("role") != "admin":
             return redirect("/")
         return f(*args, **kwargs)
 
@@ -52,7 +51,7 @@ def data_access_required(f):
 
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if not repo.has_data_access(session.get("username")):
+        if not session.get("alumni_data_access"):
             return redirect("/")
         return f(*args, **kwargs)
 
@@ -66,7 +65,7 @@ def announcer_required(f):
 
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if not repo.is_announcer(session.get("username")):
+        if not session.get("announcer"):
             return redirect("/")
         return f(*args, **kwargs)
 
@@ -80,7 +79,7 @@ def mod_permission_required(f):
 
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if not repo.is_mod(session.get("username")):
+        if not session.get("mod_permissions"):
             return redirect("/")
         return f(*args, **kwargs)
 

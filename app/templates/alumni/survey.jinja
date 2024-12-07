@@ -1,98 +1,10 @@
-{% extends "layout.jinja" %}
-{% from "_formhelpers.jinja" import render_form %}
+{% extends "layout/layout.jinja" %}
+{% from "form.jinja" import render_form %}
 {% set highlight_tab = "survey" %}
 {% block main %}
 <link href="/static/styles/survey.css" rel="stylesheet">
 <h1>Survey</h1>
-<h3>Personal Information</h3>
-<form>
-    <label for="name" class="form-label">Graduate Name</label>
-    <input type="text" class="form-control" id="name" required><br>
-    <label for="phone" class="form-label">Phone Number</label>
-    <input type="tel" class="form-control" id="phone" required><br>
-    <label for="dob" class="form-label">Date of Birth</label>
-    <input type="date" class="form-control" id="dob" required><br>
-    <label for="placeOfBirth" class="form-label">Place of Birth</label>
-    <input type="text" class="form-control" id="placeOfBirth" required><br>
-    <label for="email" class="form-label">Email</label>
-    <input type="email" class="form-control" id="email" required><br>
-    <label for="nationalNumber" class="form-label">National Number</label>
-    <input type="text" class="form-control" id="nationalNumber" required><br>
-    <label for="maritalStatus" class="form-label">Marital Status</label>
-    <select class="form-select" id="maritalStatus" required>
-        <option selected disabled value="">Choose...</option>
-        <option value="Single">Single</option>
-        <option value="Married">Married</option>
-        <option value="Divorced">Divorced</option>
-        <option value="Widowed">Widowed</option>
-    </select><br><br>
-    <label for="address" class="form-label">Address</label>
-    <input type="text" class="form-control" id="address" required><br>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-<br>
-<h3>Academic Information</h3>
-<form>
-    <label for="college" class="form-label">College</label>
-    <input type="text" class="form-control" id="college" required><br>
-    <label for="specialization" class="form-label">Specialization</label>
-    <input type="text" class="form-control" id="specialization" required><br>
-    <label for="cumulativeAverage" class="form-label">Cumulative Average</label>
-    <input type="number" step="0.01" class="form-control" id="cumulativeAverage" required><br>
-    <label for="graduationYear" class="form-label">Graduation Year</label>
-    <input type="number" class="form-control" id="graduationYear" required><br>
-    <label for="postgraduateStudies" class="form-label">Did you complete your postgraduate studies?</label>
-    <select class="form-select" id="postgraduateStudies" required onchange="toggleReasonField()">
-        <option selected disabled value="">Choose...</option>
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
-    </select><br><br>
-    <label for="reason" class="form-label">What are the reasons that prevented you from completing your studies?</label>
-    <textarea class="form-control" id="reason"></textarea><br>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-<br>
-<h3>Employment Information</h3>
-<form>
-    <label for="currentWorkStatus" class="form-label">Do you work at the moment?</label>
-    <select class="form-select" id="currentWorkStatus" required onchange="toggleJobFields()">
-        <option selected disabled value="">Choose...</option>
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
-    </select><br><br>
-    <label for="reasonNotWorking" class="form-label">Reasons why you don't go to work</label>
-    <textarea class="form-control" id="reasonNotWorking"></textarea><br>
-    <label for="workPlace" class="form-label">Work Place</label>
-    <input type="text" class="form-control" id="workPlace"><br>
-    <label for="dateOfJoining" class="form-label">Date of Joining Work</label>
-    <input type="date" class="form-control" id="dateOfJoining"><br>
-    <label for="jobTitle" class="form-label">Job Title</label>
-    <input type="text" class="form-control" id="jobTitle"><br>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-<br>
-<h3>Feedback</h3>
-<form>
-    <label for="communication" class="form-label">Do you communicate with the university on a regular basis?</label>
-    <select class="form-select" id="communication" required>
-        <option selected disabled value="">Choose...</option>
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
-    </select><br><br>
-    <label for="followActivities" class="form-label">Do you follow the university's activities and events?</label>
-    <select class="form-select" id="followActivities" required>
-        <option selected disabled value="">Choose...</option>
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
-    </select><br><br>
-    <label for="supportClub" class="form-label">Do you support the establishment of a club for graduates of Al-Balqa Applied University?</label>
-    <select class="form-select" id="supportClub" required>
-        <option selected disabled value="">Choose...</option>
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
-    </select><br><br>
-    <label for="commentsSuggestions" class="form-label">Do you have comments or suggestions?</label>
-    <textarea class="form-control" id="commentsSuggestions"></textarea><br>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+{% for form in forms %}
+    {{ render_form(form) }}
+{% endfor %}
 {% endblock %}

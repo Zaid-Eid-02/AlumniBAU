@@ -116,8 +116,8 @@ body {
 
 :focus {
     outline: 0;
-    border-color: #2260ff;
-    box-shadow: 0 0 0 4px #b5c9fc;
+    border-color: #006226f5;
+    box-shadow: 0 0 0 4px #b5fcd0;
 }
   
 #role {
