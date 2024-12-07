@@ -57,7 +57,8 @@ class Database:
             conn.executescript(schema)
             conn.commit()
             id = self.execute(
-                "INSERT INTO users DEFAULT VALUES;",
+                "INSERT INTO users (name) VALUES (?);",
+                USERNAME,
             )
             self.execute(
                 "INSERT INTO admins (id, username, password_hash, manage, announce, stats, mod) VALUES (?, ?, ?, ?, ?, ?, ?);",
@@ -81,11 +82,7 @@ class Database:
             cursor = conn.cursor()
             cursor.execute(sql, params)
             conn.commit()
-            results = (
-                cursor.fetchall()
-                if cursor.description
-                else cursor.lastrowid
-            )
+            results = cursor.fetchall() if cursor.description else cursor.lastrowid
             cursor.close()
             return results
         except sqlite3.Error as e:

@@ -13,10 +13,9 @@ bp = Blueprint("survey", __name__)
 @bp.route("/survey")
 @login_required
 def survey():
-    alumnus = MultiDict(dict(repo.get_alumnus(session.get("username"))))
+    alumnus = repo.get_alumnus(session.get("username"))
     forms = [
-        form(obj=alumnus)
+        form(data=alumnus)
         for form in [PersonalForm, AcademicForm, EmploymentForm, FeedbackForm]
     ]
-    print(forms)
     return render_template("alumni/survey.jinja", forms=forms)

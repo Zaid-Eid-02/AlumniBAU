@@ -1,14 +1,28 @@
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, TextAreaField, StringField, DateField
+from wtforms import BooleanField, TextAreaField, StringField, DateField, SubmitField
 
 
 class EmploymentForm(FlaskForm):
-    work = BooleanField()
+    form_title = "Employment"
 
-    reason = TextAreaField()
+    work = BooleanField(
+        description="Are you currently working?",
+    )
 
-    address = StringField()
+    reason = TextAreaField(
+        label="What reasons prevented you from working?",
+    )
 
-    date = DateField()
+    address = StringField(
+        "Company Address",
+    )
 
-    title = StringField()
+    date = DateField(
+        "Date of Employment",
+    )
+
+    title = StringField(
+        "Job Title",
+    )
+
+    save = SubmitField()

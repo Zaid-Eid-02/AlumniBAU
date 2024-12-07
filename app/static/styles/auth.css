@@ -12,7 +12,7 @@ form {
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
-form > * {
+form>* {
     margin-left: 0.5rem !important;
 }
 
@@ -67,7 +67,7 @@ input {
 }
 
 .signup-link {
-    color: #6B7280;
+    color: #6c806b;
     font-size: 0.875rem;
     line-height: 1.25rem;
     text-align: center;
@@ -75,7 +75,7 @@ input {
 
 .signup-link a {
     text-decoration: underline;
-    color: #406abd;
+    color: #55bd40;
 }
 
 input:user-invalid {
@@ -83,7 +83,7 @@ input:user-invalid {
 }
 
 input:user-valid {
-    border-color: #34d399;
+    border-color: #34d35c;
 }
 
 .navbar {
@@ -93,14 +93,14 @@ input:user-valid {
 }
 
 #eye {
-    color: #6B7280;
+    color: #6d806b;
     font-size: 0.875rem;
     line-height: 1.25rem;
     cursor: pointer;
     width: 1rem;
 }
 
-form > span {
+form>span {
     transform: translate(1.5rem, -1.5rem);
 }
 
@@ -111,9 +111,9 @@ form > span {
 }
 
 body {
-    background-color: #f1f6e6;
+    background-color: #e9f6e6;
 }
-  
+
 #role {
     display: flex;
     flex-wrap: wrap;
@@ -123,7 +123,7 @@ body {
     margin-left: 30% !important;
     transform: translateX(-30%);
 }
-  
+
 #role input[type="radio"] {
     clip: rect(0 0 0 0);
     clip-path: inset(100%);
@@ -133,14 +133,14 @@ body {
     white-space: nowrap;
     width: 1px;
 }
-  
-#role input[type="radio"]:checked + label {
+
+#role input[type="radio"]:checked+label {
     box-shadow: 0 0 0 0.0625em #006226f5;
     background-color: #deffe9;
     z-index: 1;
     color: #006226f5;
 }
-  
+
 li label {
     display: block;
     cursor: pointer;
@@ -154,11 +154,11 @@ li label {
     text-align: center;
     transition: background-color .5s ease;
 }
-  
+
 li:first-child label {
     border-radius: .375em 0 0 .375em;
 }
-  
+
 li:last-child label {
     border-radius: 0 .375em .375em 0;
 }

@@ -1,14 +1,12 @@
-.form-control {
-    display: block;
-    width: 100%;
+input:not([type="checkbox"]), select, textarea {
     padding: .375rem .75rem;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
-    color: #212529;
+    color: #222921;
     background-color: #fff;
     background-clip: padding-box;
-    border: 1px solid #dee2e6;
+    border: 1px solid #dfe6de;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -18,11 +16,102 @@
 
 main {
     text-align: left;
-    max-width: 800px;
-    margin-right: 50%;
-    transform: translateX(50%);
+    justify-self: center;
 }
 
 .btn {
     background-color: #0d6efd;
+}
+
+details span {
+    font-size: x-large;
+    font-weight: bold;
+    padding: 1rem;
+}
+
+details > label, details > input, details > textarea, details > select, details > summary {
+    margin: 1rem;
+    margin-left: 2rem;
+}
+
+h1 {
+    text-align: center;
+}
+
+input {
+    margin-bottom: 2rem;
+}
+
+input[type="submit"] {
+    background-color: #006226f5;
+    color: #ffffff;
+}
+
+textarea {
+    width: 80%;
+}
+
+body {
+    background-color: #f1f6e6;
+}
+
+details {
+    width: 100%;
+    max-width: 500px;
+    background-color: #ffffff;
+    border-radius: 1rem;
+    margin: 2rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+label {
+    display: block;
+    margin-bottom: 0 !important;
+}
+
+
+/* animation */
+details::details-content {
+	display: block;
+	margin-inline: 2rem;
+	block-size: 0;
+	overflow: hidden;
+	transition-property: block-size, content-visibility;
+	transition-duration: 0.5s;
+	transition-behavior: allow-discrete;
+}
+
+details[open]::details-content {
+	block-size: auto;
+	block-size: calc-size(auto, size);
+}
+
+summary::marker {
+	content: '»';
+	content: none;
+}
+
+summary::before {
+	content: '▶';
+	position: absolute;
+	inset-inline-start: 1rem;
+	inset-block-start: -0.05rem;
+	transition: rotate 0.2s;
+}
+
+details[open] summary::before {
+	rotate: 90deg;
+	inset-block-start: 0.05rem;
+}
+
+summary {
+	padding-inline: 2rem;
+	position: relative;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+#survey > * {
+    transform: translateX(-2rem);
 }

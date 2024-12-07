@@ -3,10 +3,13 @@
 {% set highlight_tab = "survey" %}
 {% block main %}
 <link href="/static/styles/survey.css" rel="stylesheet">
-<h1>Survey</h1>
-{% for form in forms %}
-    <details>
-    {{ render_form(form) }}
-    </details>
-{% endfor %}
+<div id="survey">
+    <h1>Survey</h1>
+    {% for form in forms %}
+        <details open>
+            <summary><span>{{ form.form_title }}</span></summary>
+            {{ render_form(form) }}
+        </details>
+    {% endfor %}
+</div>
 {% endblock %}

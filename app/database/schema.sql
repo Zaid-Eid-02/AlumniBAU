@@ -1,6 +1,7 @@
 CREATE TABLE users (
     id INTEGER PRIMARY KEY,
     name TEXT,
+    profile_picture BLOB,
     following_count INTEGER DEFAULT 0,
     followers_count INTEGER DEFAULT 0,
     posts_count INTEGER DEFAULT 0,
@@ -73,7 +74,6 @@ CREATE TABLE alumni (
     email TEXT,
     home_address TEXT,
     martial_status_id INTEGER,
-    profile_picture BLOB,
     cv BLOB,
     postgrad_reason TEXT,
     work_reason TEXT,
@@ -85,7 +85,7 @@ CREATE TABLE alumni (
     FOREIGN KEY (id) REFERENCES users(id),
     FOREIGN KEY (major_id) REFERENCES majors(id),
     FOREIGN KEY (martial_status_id) REFERENCES martial_status(id),
-    FOREIGN KEY (degree_id) REFERENCES degree(id),
+    FOREIGN KEY (degree_id) REFERENCES degrees(id),
     FOREIGN KEY (nno_hash) REFERENCES users(password_hash)
 );
 
@@ -111,12 +111,12 @@ CREATE TABLE majors (
 
 INSERT INTO majors (name) VALUES ('Computer Science'), ('Software Engineering'), ('Information Systems'), ('Computer Graphics'), ('Information Security');
 
-CREATE TABLE degree (
+CREATE TABLE degrees (
     id INTEGER PRIMARY KEY,
     name TEXT NOT NULL
 );
 
-INSERT INTO degree (name) VALUES ('Bachelor'), ('Master Thesis'), ('Master Comprehensive');
+INSERT INTO degrees (name) VALUES ('Bachelor'), ('Master Thesis'), ('Master Comprehensive');
 
 CREATE TABLE martial_status (
     id INTEGER PRIMARY KEY,
@@ -238,7 +238,7 @@ CREATE TABLE stats (
 INSERT INTO stats DEFAULT VALUES;
 
 CREATE TRIGGER add_alumni_stats AFTER INSERT ON alumni BEGIN
-    INSERT INTO users (id) VALUES (NEW.id);
+    INSERT INTO users (id, name) VALUES (NEW.id, NEW.full_name);
     UPDATE stats SET alumni_count = alumni_count + 1;
 
     -- gender
@@ -264,10 +264,10 @@ CREATE TRIGGER add_alumni_stats AFTER INSERT ON alumni BEGIN
     UPDATE stats SET fair_count = fair_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND GPA >= 200 AND GPA < 250);
     UPDATE stats SET poor_count = poor_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND GPA < 200);
 
-    -- degrees
-    UPDATE stats SET bachelor_count = bachelor_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND degree_id = (SELECT id FROM degree WHERE name = 'Bachelor'));
-    UPDATE stats SET master_thesis_count = master_thesis_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND degree_id = (SELECT id FROM degree WHERE name = 'Master Thesis'));
-    UPDATE stats SET master_comprehensive_count = master_comprehensive_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND degree_id = (SELECT id FROM degree WHERE name = 'Master Comprehensive'));
+    -- degreess
+    UPDATE stats SET bachelor_count = bachelor_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND degree_id = (SELECT id FROM degrees WHERE name = 'Bachelor'));
+    UPDATE stats SET master_thesis_count = master_thesis_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND degree_id = (SELECT id FROM degrees WHERE name = 'Master Thesis'));
+    UPDATE stats SET master_comprehensive_count = master_comprehensive_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND degree_id = (SELECT id FROM degrees WHERE name = 'Master Comprehensive'));
 
     -- martial status
     UPDATE stats SET married_count = married_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND martial_status_id = (SELECT id FROM martial_status WHERE name = 'Married'));

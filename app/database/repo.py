@@ -1,4 +1,3 @@
-from math import perm
 from app.database.database import db
 from werkzeug.security import generate_password_hash
 from io import StringIO
@@ -46,7 +45,20 @@ class repo:
 
     @staticmethod
     def get_alumnus(username):
-        return db.execute("SELECT * FROM alumni WHERE username = ?;", username)[0]
+        alumnus = db.execute("SELECT * FROM alumni WHERE username = ?;", username)
+        if len(alumnus):
+            alumnus = dict(alumnus[0])
+        else:
+            return None
+        alumnus["major"] = db.execute(
+            "SELECT name FROM majors WHERE id = ?;", alumnus["major_id"]
+        )[0]["name"]
+        alumnus["degree"] = db.execute(
+            "SELECT name FROM degrees WHERE id = ?;", alumnus["degree_id"]
+        )[0]["name"]
+        alumnus["public_sector"] = "العام" if alumnus["public_sector"] else "الخاص"
+        alumnus["gpa"] = alumnus["GPA"] / 100
+        return alumnus
 
     @staticmethod
     def get_alumni(username):

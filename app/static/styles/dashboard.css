@@ -32,9 +32,9 @@ h3 {
     display: none;
 }
 
-.container>a {
+.container a {
     text-decoration: none;
-    margin-inline: 3rem;
+    margin-inline: 2rem;
 }
 
 @media (max-width: 768px) {
@@ -44,5 +44,9 @@ h3 {
 
     .counters {
         display: block;
+    }
+
+    .container a {
+        margin-inline: 0;
     }
 }

@@ -2,12 +2,12 @@
 {% set highlight_tab = "stats" %}
 {% set title = "Data Table"%}
 {% block main %}
-<link rel="stylesheet" href="static/styles/table.css">
-<script src="static/scripts/TableFilter/tablefilter.js"></script>
-<h2>Alumni</h2><a href="/alumni"><button>Reset Filters</button></a>
 {% if alumni %}
+<link rel="stylesheet" href="static/styles/table.css">
+<h2>Alumni</h2><a href="/alumni"><button>Reset Filters</button></a>
 {% set majors = ["Computer Science", "Software Engineering", "Information Systems", "Computer Graphics", "Information Security"] %}
 {% set degrees = ["Bachelors", "Master Thesis", "Master Comprehensive"]%}
+<script src="static/scripts/TableFilter/tablefilter.js"></script>
 <div class="table-container" style="max-width: 1220px;">
     <table class="sortable">
         <thead>

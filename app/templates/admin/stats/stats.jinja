@@ -14,7 +14,9 @@
     {% endfor %}
     <div class="counters">
         {% for counter in counters %}
-        <h3 id="{{counter}}">{{counter|capitalize}} Count: {{stats[counter + "_count"]}}</h3>
+            <a href="/{{counter}}">
+                <h3 id="{{counter}}">{{counter|capitalize}} Count: {{stats[counter + "_count"]}}</h3>
+            </a>
         {% endfor %}
     </div>
     <canvas id="graduation_year"></canvas>
