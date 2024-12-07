@@ -244,11 +244,12 @@ main {
     background: #00af437e;
 }
 
-input:focus {
-    border-color: #00af437e;
-    box-shadow: 0 0 0 4px #00ff6234;
-}
-
 input {
     accent-color: #006226f5;
+}
+
+:focus {
+    outline: 0;
+    border-color: #006226f5;
+    box-shadow: 0 0 0 4px #b5fcd0;
 }

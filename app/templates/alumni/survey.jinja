@@ -5,6 +5,8 @@
 <link href="/static/styles/survey.css" rel="stylesheet">
 <h1>Survey</h1>
 {% for form in forms %}
+    <details>
     {{ render_form(form) }}
+    </details>
 {% endfor %}
 {% endblock %}
