@@ -107,10 +107,6 @@ form>span {
     }
 }
 
-body {
-    background-color: #e9f6e6;
-}
-
 #role {
     display: flex;
     flex-wrap: wrap;

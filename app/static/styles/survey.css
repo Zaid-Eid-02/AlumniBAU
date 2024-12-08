@@ -45,10 +45,6 @@ input[type="submit"] {
     margin-right: 2rem;
 }
 
-body {
-    background-color: #f1f6e6;
-}
-
 details {
     min-width: 400px;
     margin: 2rem auto;
