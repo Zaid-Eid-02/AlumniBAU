@@ -4,7 +4,7 @@
     {% endif %}
     {{ field(**kwargs)|safe }}
     {% if field.type not in ['BooleanField', 'SubmitField', 'CSRFTokenField'] %}<br>{% endif %}
-    {{ field.description }}<br>
+    {% if field.description %} {{ field.description }}<br>{% endif %}
     {% if field.errors %}
         <ul class=errors>
         {% for error in field.errors %}
@@ -14,8 +14,11 @@
     {% endif %}
 {% endmacro %}
 
-{% macro render_form(form) %}
-    {% for field in form %}
-        {{ render_field(field) }}
-    {% endfor %}
+{% macro render_form(form, title) %}
+    <form method="post" action="{{form.route}}">
+        {{title}}
+        {% for field in form %}
+            {{ render_field(field) }}
+        {% endfor %}
+    </form>
 {% endmacro %}

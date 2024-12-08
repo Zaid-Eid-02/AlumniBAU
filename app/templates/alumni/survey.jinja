@@ -1,15 +1,16 @@
 {% extends "layout/layout.jinja" %}
 {% from "form.jinja" import render_form %}
 {% set highlight_tab = "survey" %}
-{% block main %}
+{% block main %} 
 <link href="/static/styles/survey.css" rel="stylesheet">
+<script src="/static/scripts/survey.js" defer></script>
 <div id="survey">
     <h1>Survey</h1>
     {% for form in forms %}
-        <details open>
+        <details {{'class="completed"'if form.is_completed else"open"}}>
             <summary><span>{{ form.form_title }}</span></summary>
-            {{ render_form(form) }}
+                    {{ render_form(form) }}
+                </form>
         </details>
     {% endfor %}
-</div>
 {% endblock %}

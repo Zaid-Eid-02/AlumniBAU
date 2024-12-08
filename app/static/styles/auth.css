@@ -26,7 +26,6 @@ form>* {
 
 .input-container {
     position: relative;
-
 }
 
 input,
@@ -36,10 +35,10 @@ input,
     margin: 8px 0;
 }
 
-input {
+input:not([type="checkbox"], [type="submit"]) {
     background-color: #fff;
     padding: 1rem;
-    font-size: 0.875rem;
+    font-size: 1rem;
     line-height: 1.25rem;
     border-radius: 0.5rem;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -94,8 +93,6 @@ input:user-valid {
 
 #eye {
     color: #6d806b;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
     cursor: pointer;
     width: 1rem;
 }

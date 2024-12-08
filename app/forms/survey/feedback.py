@@ -5,6 +5,8 @@ from wtforms import BooleanField, SubmitField, TextAreaField
 class FeedbackForm(FlaskForm):
     form_title = "Feedback"
 
+    route = "/feedback"
+
     communicate = BooleanField(
         description="Do you communicate with the university?",
     )

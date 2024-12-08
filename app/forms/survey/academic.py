@@ -10,7 +10,9 @@ from wtforms import (
 
 
 class AcademicForm(FlaskForm):
-    form_title = "Academic Information"
+    form_title = "Academic"
+
+    route = "/academic"
 
     major = StringField(
         render_kw={"disabled": True},

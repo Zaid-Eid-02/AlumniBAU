@@ -5,6 +5,8 @@ from wtforms import BooleanField, TextAreaField, StringField, DateField, SubmitF
 class EmploymentForm(FlaskForm):
     form_title = "Employment"
 
+    route = "/employment"
+
     work = BooleanField(
         description="Are you currently working?",
     )

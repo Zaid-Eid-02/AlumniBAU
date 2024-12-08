@@ -5,6 +5,10 @@ from wtforms.validators import InputRequired, Length
 
 
 class LoginForm(FlaskForm):
+    form_title = "Login as:"
+
+    route = "/login"
+    
     role = RadioField(
         choices=[("Alumni"), ("Admin")], default="Alumni", validators=[InputRequired()]
     )

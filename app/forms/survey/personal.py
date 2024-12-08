@@ -3,7 +3,9 @@ from wtforms import StringField, EmailField, SelectField, TelField, SubmitField
 
 
 class PersonalForm(FlaskForm):
-    form_title = "Personal Information"
+    form_title = "Personal"
+
+    route = "/personal"
 
     full_name = StringField(
         render_kw={"disabled": True},
