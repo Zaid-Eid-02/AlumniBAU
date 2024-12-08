@@ -1,11 +1,11 @@
 from flask import Blueprint, render_template, session
 from werkzeug.datastructures import MultiDict
-from app.utils import login_required
-from app.database.repo import repo
-from app.forms.survey.personal import PersonalForm
-from app.forms.survey.academic import AcademicForm
-from app.forms.survey.employment import EmploymentForm
-from app.forms.survey.feedback import FeedbackForm
+from utils import login_required
+from database.repo import repo
+from forms.survey.personal import PersonalForm
+from forms.survey.academic import AcademicForm
+from forms.survey.employment import EmploymentForm
+from forms.survey.feedback import FeedbackForm
 
 bp = Blueprint("survey", __name__)
 

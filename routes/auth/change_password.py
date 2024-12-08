@@ -1,5 +1,5 @@
 from flask import Blueprint, request, render_template, session, flash, redirect
-from app.database import repo
+from database import repo
 
 bp = Blueprint("change_password", __name__)
 

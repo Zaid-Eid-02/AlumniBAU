@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, session
-from app.utils import login_required
+from utils import login_required
 
 bp = Blueprint("posts", __name__)
 

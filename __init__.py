@@ -1,9 +1,9 @@
 from flask import Flask, render_template
 from flask_wtf.csrf import CSRFProtect
-from app.routes import index
-from app.routes.auth import login, logout, change_password
-from app.routes.alumni import survey, news, posts
-from app.routes.admin import stats, manage, mod, announce
+from routes import index
+from routes.auth import login, logout, change_password
+from routes.alumni import survey, news, posts
+from routes.admin import stats, manage, mod, announce
 
 
 def create_app():
@@ -43,5 +43,11 @@ def create_app():
     @app.errorhandler(404)
     def not_found(e):
         return render_template("error.jinja", message=str(e)[3:], code=404)
+
+    if app.config["DEBUG"]:
+        print(app.config)
+        print(app.url_map)
+        print(app.url_map._rules)
+        print(app.url_map._rules_by_endpoint)
 
     return app

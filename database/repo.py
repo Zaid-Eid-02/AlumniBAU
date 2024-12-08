@@ -1,4 +1,4 @@
-from app.database.database import db
+from database.database import db
 from werkzeug.security import generate_password_hash
 from io import StringIO
 import csv

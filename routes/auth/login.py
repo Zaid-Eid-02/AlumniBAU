@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, request, session, flash
-from app.forms.auth.login import LoginForm
+from forms.auth.login import LoginForm
 from werkzeug.security import check_password_hash
-from app.database.repo import repo
+from database.repo import repo
 
 bp = Blueprint("login", __name__)
 
