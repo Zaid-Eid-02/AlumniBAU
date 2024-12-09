@@ -18,3 +18,43 @@ def survey():
         for form in [PersonalForm, AcademicForm, EmploymentForm, FeedbackForm]
     ]
     return render_template("alumni/survey.jinja", forms=forms)
+
+
+@bp.route("/personal", methods=["POST"])
+@login_required
+def personal():
+    alumnus = repo.get_alumnus(session.get("username"))
+    form = PersonalForm(data=alumnus)
+    if form.validate_on_submit():
+        repo.update_personal(session.get("username"), form.data)
+    return survey()
+
+
+@bp.route("/academic", methods=["POST"])
+@login_required
+def academic():
+    alumnus = repo.get_alumnus(session.get("username"))
+    form = AcademicForm(data=alumnus)
+    if form.validate_on_submit():
+        repo.update_academic(session.get("username"), form.data)
+    return survey()
+
+
+@bp.route("/employment", methods=["POST"])
+@login_required
+def employment():
+    alumnus = repo.get_alumnus(session.get("username"))
+    form = EmploymentForm(data=alumnus)
+    if form.validate_on_submit():
+        repo.update_employment(session.get("username"), form.data)
+    return survey()
+
+
+@bp.route("/feedback", methods=["POST"])
+@login_required
+def feedback():
+    alumnus = repo.get_alumnus(session.get("username"))
+    form = FeedbackForm(data=alumnus)
+    if form.validate_on_submit():
+        repo.update_feedback(session.get("username"), form.data)
+    return survey()
