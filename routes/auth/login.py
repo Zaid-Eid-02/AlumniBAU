@@ -9,7 +9,8 @@ bp = Blueprint("login", __name__)
 @bp.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
-    session.clear()
+    if session.get("id"):
+        return redirect("/")
 
     form = LoginForm()
 

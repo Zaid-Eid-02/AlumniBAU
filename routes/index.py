@@ -1,5 +1,4 @@
 from flask import Blueprint, redirect, session
-from database.repo import repo
 from utils import login_required
 
 bp = Blueprint("index", __name__)

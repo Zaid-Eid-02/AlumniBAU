@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, session
-from werkzeug.datastructures import MultiDict
 from utils import login_required
 from database.repo import repo
 from forms.survey.personal import PersonalForm

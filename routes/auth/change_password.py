@@ -21,6 +21,6 @@ def change_password():
     if password != verification:
         return render_template("error.jinja", message="passwords don't match", code=400)
 
-    repo.update_password(session["id"], password)
+    repo.update_password(session.get("id"), password)
     flash("Password Changed Successfully!")
     return redirect("/")
