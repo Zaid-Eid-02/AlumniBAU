@@ -1,8 +1,8 @@
 {% extends "layout/layout.jinja" %}
 
 {% block main %}
-<h1>Error {{ code }} </h1>
-<p> {{ message }} </p>
+<h1>Error {{ message[:3] }} </h1>
+<p> {{ message[3:] }} </p>
 <button onclick="window.history.back()"
     style="padding: 0.5rem 1rem; border-radius: 0.5rem; border: none; cursor: pointer;">
     Go Back

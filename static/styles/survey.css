@@ -76,3 +76,11 @@ details > :not(summary, [type="submit"], [type="checkbox"]) {
 details[open] > summary {
     margin-bottom: 1rem;
 }
+
+.completed > summary {
+    background-image: url("/static/pics/icons/check.svg");
+    background-size: 1.5rem;
+    background-repeat: no-repeat;
+    background-position: 95% 10%;
+    filter: invert(25%) sepia(44%) saturate(1670%) hue-rotate(109deg) brightness(95%) contrast(102%);
+}

@@ -42,7 +42,7 @@ def create_app():
 
     @app.errorhandler(404)
     def not_found(e):
-        return render_template("error.jinja", message=str(e)[3:], code=404)
+        return render_template("error.jinja", message=str(e))
 
     if app.config["DEBUG"]:
         print(app.config)
