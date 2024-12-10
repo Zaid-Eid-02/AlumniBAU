@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, session
+from flask import Blueprint, redirect, render_template, session
 from utils import login_required
 from database.repo import repo
 from forms.survey.personal import PersonalForm
@@ -14,9 +14,29 @@ bp = Blueprint("survey", __name__)
 def survey():
     alumnus = repo.get_alumnus(session.get("username"))
     forms = [
-        form(data=alumnus)
-        for form in [PersonalForm, AcademicForm, EmploymentForm, FeedbackForm]
+        form(data=data(alumnus))
+        for data, form in zip(
+            (
+                repo.get_personal,
+                repo.get_academic,
+                repo.get_employment,
+                repo.get_feedback,
+            ),
+            (PersonalForm, AcademicForm, EmploymentForm, FeedbackForm),
+        )
     ]
+
+    for data, form in zip(
+        (
+            repo.get_personal,
+            repo.get_academic,
+            repo.get_employment,
+            repo.get_feedback,
+        ),
+        forms,
+    ):
+        form.is_completed = data(alumnus)["is_completed"]
+
     return render_template("alumni/survey.jinja", forms=forms)
 
 
@@ -26,8 +46,8 @@ def personal():
     alumnus = repo.get_alumnus(session.get("username"))
     form = PersonalForm(data=alumnus)
     if form.validate_on_submit():
-        repo.update_personal(session.get("username"), form.data)
-    return survey()
+        repo.update_personal(form.data, alumnus.get("id"))
+    return redirect("/survey")
 
 
 @bp.route("/academic", methods=["POST"])
@@ -37,7 +57,7 @@ def academic():
     form = AcademicForm(data=alumnus)
     if form.validate_on_submit():
         repo.update_academic(session.get("username"), form.data)
-    return survey()
+    return redirect("/survey")
 
 
 @bp.route("/employment", methods=["POST"])
@@ -47,7 +67,7 @@ def employment():
     form = EmploymentForm(data=alumnus)
     if form.validate_on_submit():
         repo.update_employment(session.get("username"), form.data)
-    return survey()
+    return redirect("/survey")
 
 
 @bp.route("/feedback", methods=["POST"])
@@ -57,4 +77,4 @@ def feedback():
     form = FeedbackForm(data=alumnus)
     if form.validate_on_submit():
         repo.update_feedback(session.get("username"), form.data)
-    return survey()
+    return redirect("/survey")

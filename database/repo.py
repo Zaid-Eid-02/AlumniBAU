@@ -28,12 +28,12 @@ class repo:
         )
 
     @staticmethod
-    def get_admin(username):
-        return db.execute("SELECT * FROM admins WHERE username = ?;", username)[0]
-
-    @staticmethod
     def get_admins(username):
         return db.execute("SELECT * FROM admins WHERE username = ?;", username)
+
+    @staticmethod
+    def get_admin(username):
+        return repo.get_admins(username)[0]
 
     @staticmethod
     def get_all_admins():
@@ -45,19 +45,83 @@ class repo:
 
     @staticmethod
     def get_alumnus(username):
-        alumnus = db.execute("SELECT * FROM alumni WHERE username = ?;", username)
-        if len(alumnus):
-            alumnus = dict(alumnus[0])
+        alumni = repo.get_alumni(username)
+        return dict(alumni[0]) if len(alumni) else None
+
+    @staticmethod
+    def get_personal(alumnus):
+        is_completed = True
+
+        if alumnus.get("marital_status_id"):
+            print(alumnus["marital_status_id"])
+            alumnus["marital_status"] = int(alumnus["marital_status_id"])
         else:
-            return None
-        alumnus["major"] = db.execute(
-            "SELECT name FROM majors WHERE id = ?;", alumnus["major_id"]
-        )[0]["name"]
-        alumnus["degree"] = db.execute(
-            "SELECT name FROM degrees WHERE id = ?;", alumnus["degree_id"]
-        )[0]["name"]
-        alumnus["public_sector"] = "العام" if alumnus["public_sector"] else "الخاص"
-        alumnus["gpa"] = alumnus["GPA"] / 100
+            is_completed = False
+
+        if (
+            alumnus.get("email")
+            and alumnus.get("phone_number")
+            and alumnus.get("home_address")
+        ):
+            pass
+        else:
+            is_completed = False
+
+        alumnus["is_completed"] = is_completed
+
+        return alumnus
+
+    @staticmethod
+    def update_personal(data, id):
+        db.execute(
+            """UPDATE alumni SET marital_status_id = ?, email = ?, phone_number = ?, home_address = ? WHERE id = ?;""",
+            data["marital_status"],
+            data["email"],
+            data["phone_number"],
+            data["home_address"],
+            id,
+        )
+
+    @staticmethod
+    def get_academic(alumnus):
+        is_completed = True
+
+        if alumnus.get("major_id"):
+            alumnus["major"] = db.execute(
+                "SELECT name FROM majors WHERE id = ?;", alumnus["major_id"]
+            )[0]["name"]
+
+        if alumnus.get("degree_id"):
+            alumnus["degree"] = db.execute(
+                "SELECT name FROM degrees WHERE id = ?;", alumnus["degree_id"]
+            )[0]["name"]
+
+        if alumnus.get("GPA"):
+            alumnus["gpa"] = alumnus["GPA"] / 100
+
+        alumnus["is_completed"] = is_completed
+
+        return alumnus
+
+    @staticmethod
+    def get_employment(alumnus):
+        is_completed = True
+
+        if alumnus.get("public_sector"):
+            alumnus["public_sector"] = (
+                "public" if alumnus["public_sector"] else "private"
+            )
+
+        alumnus["is_completed"] = is_completed
+
+        return alumnus
+
+    @staticmethod
+    def get_feedback(alumnus):
+        is_completed = True
+
+        alumnus["is_completed"] = is_completed
+
         return alumnus
 
     @staticmethod
@@ -121,7 +185,7 @@ major_id,
 degree_id,
 graduation_year,
 graduation_semester,
-phone,
+phone_number,
 work_place,
 work_start_date,
 work_address,

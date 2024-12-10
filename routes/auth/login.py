@@ -32,7 +32,10 @@ def login():
         if role == "Admin":
             session["role"] = "admin"
             session["perms"] = repo.get_perms(username)
-        flash("Logged in as " + username, "success")
+            name = username
+        else:
+            name = rows[0]["full_name"]
+        flash("Logged in as " + name, "success")
         return redirect("/")
 
     flash("Invalid credentials.", "danger")

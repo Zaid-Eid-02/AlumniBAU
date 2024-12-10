@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, EmailField, SelectField, TelField, SubmitField
+from wtforms import StringField, EmailField, SelectField, IntegerField, SubmitField
 
 
 class PersonalForm(FlaskForm):
@@ -11,14 +11,15 @@ class PersonalForm(FlaskForm):
         render_kw={"disabled": True},
     )
 
-    phone_number = TelField()
+    phone_number = IntegerField()
 
     email = EmailField()
 
-    address = StringField()
+    home_address = StringField()
 
     marital_status = SelectField(
-        choices=[(1, "Single"), (2, "Married"), (3, "Divorced"), (4, "Widowed")],
+        choices=[("0", "Select"), (1, "Single"), (2, "Married"), (3, "Divorced"), (4, "Widowed")],
+        coerce=int,
     )
 
     save = SubmitField()

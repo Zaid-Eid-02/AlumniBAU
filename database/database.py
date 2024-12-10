@@ -56,13 +56,9 @@ class Database:
                 schema = file.read()
             conn.executescript(schema)
             conn.commit()
-            id = self.execute(
-                "INSERT INTO users (name) VALUES (?);",
-                USERNAME,
-            )
             self.execute(
                 "INSERT INTO admins (id, username, password_hash, manage, announce, stats, mod) VALUES (?, ?, ?, ?, ?, ?, ?);",
-                id,
+                1,
                 USERNAME,
                 generate_password_hash(PASSWORD),
                 1,
