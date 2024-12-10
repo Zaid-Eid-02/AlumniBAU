@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from wtforms.validators import DataRequired
 from wtforms import (
     StringField,
     FloatField,
@@ -27,12 +28,12 @@ class AcademicForm(FlaskForm):
         render_kw={"disabled": True},
     )
 
-    postgraduate = BooleanField(
+    postgrad = BooleanField(
         description="Did you complete your postgraduate studies?",
     )
 
-    reason = TextAreaField(
-        "What reasons prevented you from completing your postgraduate studies?",
+    postgrad_reason = TextAreaField(
+        "What reasons prevented/helped you complete your postgraduate studies?",
     )
 
     save = SubmitField()

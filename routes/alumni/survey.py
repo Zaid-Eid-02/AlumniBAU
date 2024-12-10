@@ -1,5 +1,5 @@
 from flask import Blueprint, redirect, render_template, session
-from utils import login_required
+from utils import login_required, alumni_required
 from database.repo import repo
 from forms.survey.personal import PersonalForm
 from forms.survey.academic import AcademicForm
@@ -10,7 +10,7 @@ bp = Blueprint("survey", __name__)
 
 
 @bp.route("/survey")
-@login_required
+@alumni_required
 def survey():
     alumnus = repo.get_alumnus(session.get("username"))
     forms = [
@@ -41,7 +41,7 @@ def survey():
 
 
 @bp.route("/personal", methods=["POST"])
-@login_required
+@alumni_required
 def personal():
     alumnus = repo.get_alumnus(session.get("username"))
     form = PersonalForm(data=alumnus)
@@ -51,30 +51,30 @@ def personal():
 
 
 @bp.route("/academic", methods=["POST"])
-@login_required
+@alumni_required
 def academic():
     alumnus = repo.get_alumnus(session.get("username"))
     form = AcademicForm(data=alumnus)
     if form.validate_on_submit():
-        repo.update_academic(session.get("username"), form.data)
+        repo.update_academic(form.data, alumnus.get("id"))
     return redirect("/survey")
 
 
 @bp.route("/employment", methods=["POST"])
-@login_required
+@alumni_required
 def employment():
     alumnus = repo.get_alumnus(session.get("username"))
     form = EmploymentForm(data=alumnus)
     if form.validate_on_submit():
-        repo.update_employment(session.get("username"), form.data)
+        repo.update_employment(form.data, alumnus.get("id"))
     return redirect("/survey")
 
 
 @bp.route("/feedback", methods=["POST"])
-@login_required
+@alumni_required
 def feedback():
     alumnus = repo.get_alumnus(session.get("username"))
     form = FeedbackForm(data=alumnus)
     if form.validate_on_submit():
-        repo.update_feedback(session.get("username"), form.data)
+        repo.update_feedback(form.data, alumnus.get("id"))
     return redirect("/survey")

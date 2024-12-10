@@ -50,24 +50,16 @@ class repo:
 
     @staticmethod
     def get_personal(alumnus):
-        is_completed = True
-
         if alumnus.get("marital_status_id"):
             print(alumnus["marital_status_id"])
             alumnus["marital_status"] = int(alumnus["marital_status_id"])
-        else:
-            is_completed = False
 
-        if (
+        alumnus["is_completed"] = (
             alumnus.get("email")
             and alumnus.get("phone_number")
             and alumnus.get("home_address")
-        ):
-            pass
-        else:
-            is_completed = False
-
-        alumnus["is_completed"] = is_completed
+            and alumnus.get("marital_status_id")
+        )
 
         return alumnus
 
@@ -84,8 +76,6 @@ class repo:
 
     @staticmethod
     def get_academic(alumnus):
-        is_completed = True
-
         if alumnus.get("major_id"):
             alumnus["major"] = db.execute(
                 "SELECT name FROM majors WHERE id = ?;", alumnus["major_id"]
@@ -99,9 +89,20 @@ class repo:
         if alumnus.get("GPA"):
             alumnus["gpa"] = alumnus["GPA"] / 100
 
-        alumnus["is_completed"] = is_completed
+        alumnus["is_completed"] = alumnus.get("postgrad") or alumnus.get(
+            "postgrad_reason"
+        )
 
         return alumnus
+
+    @staticmethod
+    def update_academic(data, id):
+        db.execute(
+            """UPDATE alumni SET postgrad = ?, postgrad_reason = ? WHERE id = ?;""",
+            data["postgrad"] or False,
+            data["postgrad_reason"],
+            id,
+        )
 
     @staticmethod
     def get_employment(alumnus):
@@ -118,11 +119,19 @@ class repo:
 
     @staticmethod
     def get_feedback(alumnus):
-        is_completed = True
-
-        alumnus["is_completed"] = is_completed
-
+        alumnus["is_completed"] = alumnus.get("suggestion")
         return alumnus
+
+    @staticmethod
+    def update_feedback(data, id):
+        db.execute(
+            """UPDATE alumni SET suggestion = ?, follow = ?, communicate = ?, club = ? WHERE id = ?;""",
+            data["suggestion"],
+            data["follow"] or False,
+            data["communicate"] or False,
+            data["club"] or False,
+            id,
+        )
 
     @staticmethod
     def get_alumni(username):

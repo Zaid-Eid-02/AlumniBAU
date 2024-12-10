@@ -16,6 +16,20 @@ def login_required(f):
     return decorated_function
 
 
+def alumni_required(f):
+    """
+    Decorate routes to require alumni.
+    """
+
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get("role") != "alumnus":
+            return redirect("/")
+        return f(*args, **kwargs)
+
+    return decorated_function
+
+
 def admin_required(f):
     """
     Decorate routes to require an admin account.
@@ -46,7 +60,7 @@ def manager_required(f):
 
 def data_access_required(f):
     """
-    Decorate routes to require access to info.
+    Decorate routes to require access to alumni info.
     """
 
     @wraps(f)
@@ -60,7 +74,7 @@ def data_access_required(f):
 
 def announcer_required(f):
     """
-    Decorate routes to require access to announcements.
+    Decorate routes to require announcing permission.
     """
 
     @wraps(f)

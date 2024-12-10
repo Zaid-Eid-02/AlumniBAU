@@ -1,10 +1,11 @@
 from flask import Blueprint, render_template
-from utils import login_required
+from utils import admin_required, mod_permission_required
 
 bp = Blueprint("mod", __name__)
 
 
 @bp.route("/mod")
-@login_required
+@admin_required
+@mod_permission_required
 def mod():
     return render_template("admin/mod.jinja")

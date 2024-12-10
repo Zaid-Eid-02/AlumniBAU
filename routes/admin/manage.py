@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template
-from utils import manager_required
+from utils import admin_required, manager_required
 from forms.manage.upload_alumni import UploadAlumniForm
 from forms.manage.file_path import filePathForm
 from database.repo import repo
@@ -8,12 +8,14 @@ bp = Blueprint("manage", __name__)
 
 
 @bp.route("/manage")
+@admin_required
 @manager_required
 def manage():
     return render_template("admin/manage/manage.jinja")
 
 
 @bp.route("/upload", methods=["GET", "POST"])
+@admin_required
 @manager_required
 def upload():
     form = UploadAlumniForm()
@@ -27,6 +29,8 @@ def upload():
 
 
 @bp.route("/hash", methods=["GET", "POST"])
+@admin_required
+@manager_required
 def hash():
     form = filePathForm()
     message = ""

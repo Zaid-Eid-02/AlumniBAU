@@ -1,11 +1,12 @@
 from flask import Blueprint, render_template
-from utils import data_access_required
+from utils import admin_required, data_access_required
 from database.repo import repo
 
 bp = Blueprint("stats", __name__)
 
 
 @bp.route("/stats")
+@admin_required
 @data_access_required
 def stats():
     stats = repo.get_stats()
@@ -13,6 +14,7 @@ def stats():
 
 
 @bp.route("/alumni")
+@admin_required
 @data_access_required
 def alumni():
     alumni = repo.get_all_alumni()

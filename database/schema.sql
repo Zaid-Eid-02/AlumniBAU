@@ -73,13 +73,21 @@ CREATE TABLE alumni (
 
     -- survey
     submitted BOOLEAN DEFAULT 0,
+
+    -- personal
     email TEXT,
     home_address TEXT,
     marital_status_id INTEGER,
-    cv BLOB,
+
+    -- academic
     postgrad_reason TEXT,
+
+    -- work
+    cv BLOB,
     work_reason TEXT,
     work_position TEXT,
+
+    -- feedback
     communicate BOOLEAN,
     follow BOOLEAN,
     club BOOLEAN,
