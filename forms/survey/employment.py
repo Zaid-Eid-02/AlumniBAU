@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, TextAreaField, StringField, DateField, SubmitField
+from wtforms import SelectField, TextAreaField, StringField, DateField, SubmitField
 
 
 class EmploymentForm(FlaskForm):
@@ -7,8 +7,10 @@ class EmploymentForm(FlaskForm):
 
     route = "/employment"
 
-    work = BooleanField(
-        description="Are you currently working?",
+    does_work = SelectField(
+        "Are you currently working?",
+        choices=[(0, "Select"), (1, "Yes"), (2, "No")],
+        coerce=int,
     )
 
     reason = TextAreaField(

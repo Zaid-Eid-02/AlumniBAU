@@ -51,7 +51,6 @@ class repo:
     @staticmethod
     def get_personal(alumnus):
         if alumnus.get("marital_status_id"):
-            print(alumnus["marital_status_id"])
             alumnus["marital_status"] = int(alumnus["marital_status_id"])
 
         alumnus["is_completed"] = (
@@ -89,7 +88,11 @@ class repo:
         if alumnus.get("GPA"):
             alumnus["gpa"] = alumnus["GPA"] / 100
 
-        alumnus["is_completed"] = alumnus.get("postgrad") or alumnus.get(
+        if alumnus.get("postgrad") is not None:
+            alumnus["postgraduate"] = (
+                1 if alumnus["postgrad"] == 1 else 2 if alumnus["postgrad"] == 0 else 0
+            )
+        alumnus["is_completed"] = alumnus.get("postgraduate") and alumnus.get(
             "postgrad_reason"
         )
 
@@ -99,27 +102,44 @@ class repo:
     def update_academic(data, id):
         db.execute(
             """UPDATE alumni SET postgrad = ?, postgrad_reason = ? WHERE id = ?;""",
-            data["postgrad"] or False,
+            (
+                1
+                if data["postgraduate"] == 1
+                else 0 if data["postgraduate"] == 2 else None
+            ),
             data["postgrad_reason"],
             id,
         )
 
     @staticmethod
     def get_employment(alumnus):
-        is_completed = True
-
         if alumnus.get("public_sector"):
             alumnus["public_sector"] = (
                 "public" if alumnus["public_sector"] else "private"
             )
+        
+        if alumnus.get("work"):
+            alumnus["does_work"] = 1 if alumnus["work"] else 2
 
-        alumnus["is_completed"] = is_completed
+        alumnus["is_completed"] = alumnus.get("does_work")
 
         return alumnus
 
     @staticmethod
     def get_feedback(alumnus):
-        alumnus["is_completed"] = alumnus.get("suggestion")
+        for column, data in zip(
+            ["follow", "communicate", "club"],
+            ["does_follow", "does_communicate", "supports_club"],
+        ):
+            if alumnus.get(column) is not None:
+                alumnus[data] = 1 if alumnus[column] else 2
+
+        alumnus["is_completed"] = all(
+            [
+                alumnus.get(x)
+                for x in ["does_follow", "does_communicate", "supports_club"]
+            ]
+        )
         return alumnus
 
     @staticmethod
@@ -127,9 +147,17 @@ class repo:
         db.execute(
             """UPDATE alumni SET suggestion = ?, follow = ?, communicate = ?, club = ? WHERE id = ?;""",
             data["suggestion"],
-            data["follow"] or False,
-            data["communicate"] or False,
-            data["club"] or False,
+            1 if data["does_follow"] == 1 else 0 if data["does_follow"] == 2 else None,
+            (
+                1
+                if data["does_communicate"] == 1
+                else 0 if data["does_communicate"] == 2 else None
+            ),
+            (
+                1
+                if data["supports_club"] == 1
+                else 0 if data["supports_club"] == 2 else None
+            ),
             id,
         )
 

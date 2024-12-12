@@ -4,7 +4,7 @@ from wtforms import (
     StringField,
     FloatField,
     IntegerField,
-    BooleanField,
+    SelectField,
     TextAreaField,
     SubmitField,
 )
@@ -28,12 +28,15 @@ class AcademicForm(FlaskForm):
         render_kw={"disabled": True},
     )
 
-    postgrad = BooleanField(
-        description="Did you complete your postgraduate studies?",
+    postgraduate = SelectField(
+        "Did you complete your postgraduate studies?",
+        choices=[(0, "Select"), (1, "Yes"), (2, "No")],
+        coerce=int,
     )
 
     postgrad_reason = TextAreaField(
         "What reasons prevented/helped you complete your postgraduate studies?",
+        validators=[DataRequired()],
     )
 
     save = SubmitField()

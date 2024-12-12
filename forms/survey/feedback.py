@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, SubmitField, TextAreaField
+from wtforms import SelectField, TextAreaField, SubmitField
 
 
 class FeedbackForm(FlaskForm):
@@ -7,16 +7,22 @@ class FeedbackForm(FlaskForm):
 
     route = "/feedback"
 
-    communicate = BooleanField(
-        description="Do you communicate with the university?",
+    does_communicate = SelectField(
+        "Do you communicate with the university?",
+        choices=[(0, "Select"), (1, "Yes"), (2, "No")],
+        coerce=int,
     )
 
-    follow = BooleanField(
-        description="Do you follow university activities and events?",
+    does_follow = SelectField(
+        "Do you follow university activities and events?",
+        choices=[(0, "Select"), (1, "Yes"), (2, "No")],
+        coerce=int,
     )
 
-    club = BooleanField(
-        description="Do you support creating an alumni club?",
+    supports_club = SelectField(
+        "Do you support creating an alumni club?",
+        choices=[(0, "Select"), (1, "Yes"), (2, "No")],
+        coerce=int,
     )
 
     suggestion = TextAreaField("Do you have any suggestions?")
