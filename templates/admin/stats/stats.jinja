@@ -28,7 +28,11 @@
     <canvas id="work_status"></canvas>
     <canvas id="postgrad"></canvas>
     <canvas id="sector"></canvas>
+    <canvas id="submitted"></canvas>
     <canvas id="martial_status"></canvas>
+    <canvas id="communicate"></canvas>
+    <canvas id="follow"></canvas>
+    <canvas id="club"></canvas>
 </div>
 <script>
     {% set years = ["2019", "2020", "2021", "2022", "2023"] %}
@@ -339,6 +343,98 @@
                 title: {
                     display: true,
                     text: 'Work Sector',
+                    font: {
+                        size: 18
+                    }
+                }
+            }
+        }
+    });
+    var submitChart = new Chart(document.getElementById("submitted"), {
+        type: 'doughnut',
+        data: {
+            labels: ["yes", "no"],
+            datasets: [{
+                data: [{{ stats.survey_submitted_count }}, {{ stats.alumni_count - stats.survey_submitted_count }}],
+                backgroundColor: ["#008951", "#aaaaaa"],
+            }]
+        },
+        options: {
+            responsive: true,
+            cutout: "80%",
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Survey Submissions',
+                    font: {
+                        size: 18
+                    }
+                }
+            }
+        }
+    });
+    var followChart = new Chart(document.getElementById("follow"), {
+        type: 'doughnut',
+        data: {
+            labels: ["yes", "no", "unspecified"],
+            datasets: [{
+                data: [{{ stats.follow_count }}, {{ stats.not_follow_count }}, {{ stats.alumni_count - stats.follow_count }}],
+                backgroundColor: ["#008951", "#FF6384", "#aaaaaa"],
+            }]
+        },
+        options: {
+            responsive: true,
+            cutout: "80%",
+            plugins: {
+                title: {
+                    display: true,
+                    text: '"Do you follow universities activities?"',
+                    font: {
+                        size: 18
+                    }
+                }
+            }
+        }
+    });
+    var communicateChart = new Chart(document.getElementById("communicate"), {
+        type: 'doughnut',
+        data: {
+            labels: ["yes", "no", "unspecified"],
+            datasets: [{
+                data: [{{ stats.communicate_count }}, {{ stats.not_communicate_count }}, {{ stats.alumni_count - stats.communicate_count }}],
+                backgroundColor: ["#008951", "#FF6384", "#aaaaaa"],
+            }]
+        },
+        options: {
+            responsive: true,
+            cutout: "80%",
+            plugins: {
+                title: {
+                    display: true,
+                    text: '"Do you communicate with the university?"',
+                    font: {
+                        size: 18
+                    }
+                }
+            }
+        }
+    });
+    var clubChart = new Chart(document.getElementById("club"), {
+        type: 'doughnut',
+        data: {
+            labels: ["yes", "no", "unspecified"],
+            datasets: [{
+                data: [{{ stats.club_count }}, {{ stats.not_club_count }}, {{ stats.alumni_count - stats.club_count }}],
+                backgroundColor: ["#008951", "#FF6384", "#aaaaaa"],
+            }]
+        },
+        options: {
+            responsive: true,
+            cutout: "80%",
+            plugins: {
+                title: {
+                    display: true,
+                    text: '"Do support creating alumni club?"',
                     font: {
                         size: 18
                     }
