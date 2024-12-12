@@ -199,8 +199,11 @@ CREATE TABLE stats (
 
     survey_submitted_count INTEGER DEFAULT 0,
     follow_count INTEGER DEFAULT 0,
+    not_follow_count INTEGER DEFAULT 0,
     club_count INTEGER DEFAULT 0,
+    not_club_count INTEGER DEFAULT 0,
     communicate_count INTEGER DEFAULT 0,
+    not_communicate_count INTEGER DEFAULT 0,
 
     -- pie charts --
 
@@ -327,8 +330,11 @@ CREATE TRIGGER before_update_alumni_stats BEFORE UPDATE ON alumni BEGIN
     UPDATE stats SET no_postgrad_count = no_postgrad_count - (SELECT COUNT(*) FROM alumni WHERE id = OLD.id AND postgrad = 0);
 
     UPDATE stats SET follow_count = follow_count - (SELECT COUNT(*) FROM alumni WHERE id = OLD.id AND follow = 1);
+    UPDATE stats SET not_follow_count = not_follow_count - (SELECT COUNT(*) FROM alumni WHERE id = OLD.id AND follow = 0);
     UPDATE stats SET club_count = club_count - (SELECT COUNT(*) FROM alumni WHERE id = OLD.id AND club = 1);
+    UPDATE stats SET not_club_count = not_club_count - (SELECT COUNT(*) FROM alumni WHERE id = OLD.id AND club = 0);
     UPDATE stats SET communicate_count = communicate_count - (SELECT COUNT(*) FROM alumni WHERE id = OLD.id AND communicate = 1);
+    UPDATE stats SET not_communicate_count = not_communicate_count - (SELECT COUNT(*) FROM alumni WHERE id = OLD.id AND communicate = 0);
     UPDATE stats SET survey_submitted_count = survey_submitted_count - (SELECT COUNT(*) FROM alumni WHERE id = OLD.id AND submitted = 1);
 END;
 
@@ -352,8 +358,11 @@ CREATE TRIGGER after_update_alumni AFTER UPDATE ON alumni BEGIN
     UPDATE stats SET no_postgrad_count = no_postgrad_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND postgrad = 0);
 
     UPDATE stats SET follow_count = follow_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND follow = 1);
+    UPDATE stats SET not_follow_count = not_follow_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND follow = 0);
     UPDATE stats SET club_count = club_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND club = 1);
+    UPDATE stats SET not_club_count = not_club_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND club = 0);
     UPDATE stats SET communicate_count = communicate_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND communicate = 1);
+    UPDATE stats SET not_communicate_count = not_communicate_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND communicate = 0);
     UPDATE stats SET survey_submitted_count = survey_submitted_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND submitted = 1);
 END;
 

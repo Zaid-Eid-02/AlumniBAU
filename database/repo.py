@@ -2,6 +2,7 @@ from database.database import db
 from werkzeug.security import generate_password_hash
 from io import StringIO
 import csv
+from datetime import datetime
 
 
 class repo:
@@ -65,11 +66,12 @@ class repo:
     @staticmethod
     def update_personal(data, id):
         db.execute(
-            """UPDATE alumni SET marital_status_id = ?, email = ?, phone_number = ?, home_address = ? WHERE id = ?;""",
+            """UPDATE alumni SET marital_status_id = ?, email = ?, phone_number = ?, home_address = ?, submitted = ? WHERE id = ?;""",
             data["marital_status"],
             data["email"],
             data["phone_number"],
             data["home_address"],
+            1,
             id,
         )
 
@@ -101,29 +103,60 @@ class repo:
     @staticmethod
     def update_academic(data, id):
         db.execute(
-            """UPDATE alumni SET postgrad = ?, postgrad_reason = ? WHERE id = ?;""",
+            """UPDATE alumni SET postgrad = ?, postgrad_reason = ?, submitted = ? WHERE id = ?;""",
             (
                 1
                 if data["postgraduate"] == 1
                 else 0 if data["postgraduate"] == 2 else None
             ),
             data["postgrad_reason"],
+            1,
             id,
         )
 
     @staticmethod
     def get_employment(alumnus):
-        if alumnus.get("public_sector"):
-            alumnus["public_sector"] = (
-                "public" if alumnus["public_sector"] else "private"
-            )
-        
         if alumnus.get("work"):
             alumnus["does_work"] = 1 if alumnus["work"] else 2
 
-        alumnus["is_completed"] = alumnus.get("does_work")
+        if alumnus.get("work_reason"):
+            alumnus["reason"] = alumnus["work_reason"]
 
+        if alumnus.get("public_sector"):
+            alumnus["sector"] = (
+                1 if alumnus["public_sector"] else 2
+            )
+        
+        if alumnus.get("work_start_date"):
+            alumnus["date"] = datetime.strptime(alumnus["work_start_date"], "%Y-%m-%d")
+        
+        if alumnus.get("work_place"):
+            alumnus["place"] = alumnus["work_place"]
+        
+        if alumnus.get("work_address"):
+            alumnus["address"] = alumnus["work_address"]
+
+        if alumnus.get("work_phone"):
+            alumnus["phone"] = alumnus["work_phone"]
+
+        alumnus["is_completed"] = alumnus.get("does_work") and alumnus.get("sector")
         return alumnus
+
+
+    @staticmethod
+    def update_employment(data, id):
+        db.execute(
+            """UPDATE alumni SET work = ?, public_sector = ?, work_place = ?, work_start_date = ?, work_address = ?, work_phone = ?, submitted = ? WHERE id = ?;""",
+            1 if data["does_work"] == 1 else 0 if data["does_work"] == 2 else None,
+            1 if data["sector"] == 1 else 0 if data["sector"] == 2 else None,
+            data["place"],
+            data["date"],
+            data["address"],
+            data["phone"],
+            1,
+            id,
+        )
+
 
     @staticmethod
     def get_feedback(alumnus):
@@ -145,7 +178,7 @@ class repo:
     @staticmethod
     def update_feedback(data, id):
         db.execute(
-            """UPDATE alumni SET suggestion = ?, follow = ?, communicate = ?, club = ? WHERE id = ?;""",
+            """UPDATE alumni SET suggestion = ?, follow = ?, communicate = ?, club = ?, submitted = ? WHERE id = ?;""",
             data["suggestion"],
             1 if data["does_follow"] == 1 else 0 if data["does_follow"] == 2 else None,
             (
@@ -158,6 +191,7 @@ class repo:
                 if data["supports_club"] == 1
                 else 0 if data["supports_club"] == 2 else None
             ),
+            1,
             id,
         )
 

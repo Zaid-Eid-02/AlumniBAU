@@ -254,3 +254,22 @@ input:focus, textarea:focus, select:focus {
     border-color: #006226f5;
     box-shadow: 0 0 0 4px #b5fcd0;
 }
+
+input[type="file"] {
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-clip: padding-box;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+
+    box-sizing: border-box;
+    overflow: hidden;
+    outline: 0px;
+    scroll-margin-top: 80px;
+    scroll-margin-bottom: 100px;
+}

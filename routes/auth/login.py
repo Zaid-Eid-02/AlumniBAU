@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, redirect, request, session, flash
 from forms.auth.login import LoginForm
 from werkzeug.security import check_password_hash
 from database.repo import repo
+from config import DEBUG
 
 bp = Blueprint("login", __name__)
 
@@ -9,6 +10,9 @@ bp = Blueprint("login", __name__)
 @bp.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
+    if DEBUG:
+        session.clear()
+
     if session.get("id"):
         return redirect("/")
 
