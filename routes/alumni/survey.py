@@ -1,5 +1,5 @@
 from flask import Blueprint, redirect, render_template, session
-from utils import login_required, alumni_required
+from utils import alumni_required
 from database.repo import repo
 from forms.survey.personal import PersonalForm
 from forms.survey.academic import AcademicForm

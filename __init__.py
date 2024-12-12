@@ -2,7 +2,7 @@ from flask import Flask, render_template
 from flask_wtf.csrf import CSRFProtect
 from routes import index
 from routes.auth import login, logout, change_password
-from routes.alumni import survey, news, posts
+from routes.alumni import survey, news, posts, profile
 from routes.admin import stats, manage, mod, announce
 
 
@@ -18,6 +18,7 @@ def create_app():
         survey,
         news,
         posts,
+        profile,
         stats,
         manage,
         mod,
