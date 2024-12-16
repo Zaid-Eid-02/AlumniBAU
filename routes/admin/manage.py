@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, flash, render_template
 from utils import admin_required, manager_required
 from forms.manage.upload_alumni import UploadAlumniForm
-from forms.manage.file_path import filePathForm
+from forms.manage.hash_file import hashFileForm
 from database.repo import repo
 
 bp = Blueprint("manage", __name__)
@@ -19,23 +19,18 @@ def manage():
 @manager_required
 def upload():
     form = UploadAlumniForm()
-    message = ""
     if form.validate_on_submit():
-        file = form.file.data
-        file_content = file.read().decode("utf-8")
-        count = repo.add_alumni(file_content)
-        message = f"Successfully added {count} alumni"
-    return render_template("admin/manage/upload.jinja", form=form, message=message)
+        count = repo.add_alumni(form.file.data)
+        flash(f"Successfully added {count} alumni")
+    return render_template("admin/manage/upload.jinja", form=form)
 
 
 @bp.route("/hash", methods=["GET", "POST"])
 @admin_required
 @manager_required
 def hash():
-    form = filePathForm()
-    message = ""
+    form = hashFileForm()
     if form.validate_on_submit():
-        file_path = form.file_path.data
-        repo.hash_file(file_path)
-        message = f"Successfully hashed {file_path}"
-    return render_template("admin/manage/hash.jinja", form=form, message=message)
+        repo.hash_file(form.file_name.data)
+        flash(f"Successfully hashed {form.file_name.data}")
+    return render_template("admin/manage/hash.jinja", form=form)

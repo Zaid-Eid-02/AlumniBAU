@@ -77,7 +77,7 @@ CREATE TABLE alumni (
     -- personal
     email TEXT,
     home_address TEXT,
-    marital_status_id INTEGER,
+    marital_status_id INTEGER DEFAULT 1,
 
     -- academic
     postgrad_reason TEXT,
@@ -133,7 +133,7 @@ CREATE TABLE marital_status (
     name TEXT NOT NULL
 );
 
-INSERT INTO marital_status (name) VALUES ('Single'), ('Married'), ('Divorced'), ('Widowed');
+INSERT INTO marital_status (name) VALUES ('Unspecified'), ('Single'), ('Married'), ('Divorced'), ('Widowed');
 
 CREATE TABLE comments (
     id INTEGER PRIMARY KEY,
@@ -225,8 +225,9 @@ CREATE TABLE stats (
     master_comprehensive_count INTEGER DEFAULT 0,
 
     -- martial status
-    married_count INTEGER DEFAULT 0,
+    unspecified_marital_status_count INTEGER DEFAULT 0,
     single_count INTEGER DEFAULT 0,
+    married_count INTEGER DEFAULT 0,
     divorced_count INTEGER DEFAULT 0,
     widowed_count INTEGER DEFAULT 0,
 
@@ -286,9 +287,10 @@ CREATE TRIGGER add_alumni AFTER INSERT ON alumni BEGIN
     UPDATE stats SET master_thesis_count = master_thesis_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND degree_id = (SELECT id FROM degrees WHERE name = 'Master Thesis'));
     UPDATE stats SET master_comprehensive_count = master_comprehensive_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND degree_id = (SELECT id FROM degrees WHERE name = 'Master Comprehensive'));
 
-    -- martial status
-    UPDATE stats SET married_count = married_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND marital_status_id = (SELECT id FROM marital_status WHERE name = 'Married'));
+    -- marital status
+    UPDATE stats SET unspecified_marital_status_count = unspecified_marital_status_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND marital_status_id = (SELECT id FROM marital_status WHERE name = 'Unspecified'));
     UPDATE stats SET single_count = single_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND marital_status_id = (SELECT id FROM marital_status WHERE name = 'Single'));
+    UPDATE stats SET married_count = married_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND marital_status_id = (SELECT id FROM marital_status WHERE name = 'Married'));
     UPDATE stats SET divorced_count = divorced_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND marital_status_id = (SELECT id FROM marital_status WHERE name = 'Divorced'));
     UPDATE stats SET widowed_count = widowed_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND marital_status_id = (SELECT id FROM marital_status WHERE name = 'Widowed'));
 
@@ -319,8 +321,9 @@ CREATE TRIGGER before_update_alumni_stats BEFORE UPDATE ON alumni BEGIN
     UPDATE stats SET never_worked_count = never_worked_count - (SELECT COUNT(*) FROM alumni WHERE id = OLD.id AND work = 0);
 
     -- marital status
-    UPDATE stats SET married_count = married_count - (SELECT COUNT(*) FROM alumni WHERE id = OLD.id AND marital_status_id = (SELECT id FROM marital_status WHERE name = 'Married'));
+    UPDATE stats SET unspecified_marital_status_count = unspecified_marital_status_count - (SELECT COUNT(*) FROM alumni WHERE id = OLD.id AND marital_status_id = (SELECT id FROM marital_status WHERE name = 'Unspecified'));
     UPDATE stats SET single_count = single_count - (SELECT COUNT(*) FROM alumni WHERE id = OLD.id AND marital_status_id = (SELECT id FROM marital_status WHERE name = 'Single'));
+    UPDATE stats SET married_count = married_count - (SELECT COUNT(*) FROM alumni WHERE id = OLD.id AND marital_status_id = (SELECT id FROM marital_status WHERE name = 'Married'));
     UPDATE stats SET divorced_count = divorced_count - (SELECT COUNT(*) FROM alumni WHERE id = OLD.id AND marital_status_id = (SELECT id FROM marital_status WHERE name = 'Divorced'));
     UPDATE stats SET widowed_count = widowed_count - (SELECT COUNT(*) FROM alumni WHERE id = OLD.id AND marital_status_id = (SELECT id FROM marital_status WHERE name = 'Widowed'));
 
@@ -347,8 +350,9 @@ CREATE TRIGGER after_update_alumni AFTER UPDATE ON alumni BEGIN
     UPDATE stats SET never_worked_count = never_worked_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND work = 0);
 
     -- marital status
-    UPDATE stats SET married_count = married_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND marital_status_id = (SELECT id FROM marital_status WHERE name = 'Married'));
+    UPDATE stats SET unspecified_marital_status_count = unspecified_marital_status_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND marital_status_id = (SELECT id FROM marital_status WHERE name = 'Unspecified'));
     UPDATE stats SET single_count = single_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND marital_status_id = (SELECT id FROM marital_status WHERE name = 'Single'));
+    UPDATE stats SET married_count = married_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND marital_status_id = (SELECT id FROM marital_status WHERE name = 'Married'));
     UPDATE stats SET divorced_count = divorced_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND marital_status_id = (SELECT id FROM marital_status WHERE name = 'Divorced'));
     UPDATE stats SET widowed_count = widowed_count + (SELECT COUNT(*) FROM alumni WHERE id = NEW.id AND marital_status_id = (SELECT id FROM marital_status WHERE name = 'Widowed'));
 

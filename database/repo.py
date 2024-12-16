@@ -228,7 +228,7 @@ class repo:
         ]
 
     @staticmethod
-    def add_alumni(csv_file):
+    def add_alumni(file):
         majors = {
             "علم الحاسوب": 1,
             "هندسة البرمجيات": 2,
@@ -266,8 +266,7 @@ postgrad,
 work
 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"""
         id = repo.get_last_user_id() + 1
-        csv_data = StringIO(csv_file)
-        reader = csv.reader(csv_data)
+        reader = csv.reader(StringIO(file.read().decode("utf-8")))
         next(reader)  # Skip header
         params = [
             (

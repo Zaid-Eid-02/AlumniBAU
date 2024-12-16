@@ -29,7 +29,7 @@
     <canvas id="postgrad"></canvas>
     <canvas id="sector"></canvas>
     <canvas id="submitted"></canvas>
-    <canvas id="martial_status"></canvas>
+    <canvas id="marital_status"></canvas>
     <canvas id="communicate"></canvas>
     <canvas id="follow"></canvas>
     <canvas id="club"></canvas>
@@ -259,18 +259,19 @@
         }
     }
     });
-    {% set martial_status = ["married", "single", "divorced", "widowed"]%}
-    var martialStatusChart = new Chart(document.getElementById("martial_status"), {
+    {% set marital_status = ["married", "single", "divorced", "widowed"]%}
+    var maritalStatusChart = new Chart(document.getElementById("marital_status"), {
         type: 'pie',
         data: {
-            labels: [{% for status in martial_status %}"{{status|title}}", {% endfor %}],
+            labels: [{% for status in marital_status %}"{{status|title}}", {% endfor %} "Unspecified"],
             datasets: [{
                 data: [
-                    {% for status in martial_status %}
+                    {% for status in marital_status %}
                         {{stats[status + "_count"]}},
                     {% endfor %}
+                    {{stats.unspecified_marital_status_count}}
                 ],
-                backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4bc0c0"],
+                backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4bc0c0", "#aaaaaa"],
             }]
         },
     options: {
@@ -278,7 +279,7 @@
             plugins: {
             title: {
                 display: true,
-                text: 'Martial Status',
+                text: 'Marital Status',
                 font: {
                     size: 18
                 }
