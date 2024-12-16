@@ -11,13 +11,13 @@ button {
     min-width: 8rem;
 }
 
-.container > a {
+.container a {
     text-decoration: none;
     color: black;
     height: 2.1rem;
 }
 
-a:hover {
+a button {
     cursor: pointer;
 }
 
@@ -30,4 +30,5 @@ button>img {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
 }
