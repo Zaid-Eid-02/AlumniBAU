@@ -16,14 +16,6 @@ form>* {
     margin-left: 0.5rem !important;
 }
 
-.form-title {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-    font-weight: 600;
-    text-align: center;
-    color: #000;
-}
-
 .input-container {
     position: relative;
 }

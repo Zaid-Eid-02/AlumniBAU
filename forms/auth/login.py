@@ -5,7 +5,7 @@ from wtforms.validators import InputRequired, Length
 
 
 class LoginForm(FlaskForm):
-    form_title = "Login as:"
+    form_title = 'Login As:'
 
     route = "/login"
     

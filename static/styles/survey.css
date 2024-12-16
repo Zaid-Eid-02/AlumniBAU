@@ -13,6 +13,11 @@ textarea {
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
+label {
+    display: block;
+    margin-top: 0.5rem;
+}
+
 select {
     margin-bottom: 1rem;
 }
@@ -98,3 +103,11 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance: textfield;
 }
+
+.form-title {
+    display: none;
+}
+
+textarea {
+    resize: none;
+  }

@@ -7,7 +7,6 @@ body {
 
 main {
     padding: 85px 20px;
-    text-align: center;
 }
 
 .navbar *,
@@ -249,7 +248,15 @@ input {
     accent-color: #006226f5;
 }
 
-input:focus, textarea:focus, select:focus {
+input:not([type="checkbox"]) {
+    padding: .375rem .75rem;
+    border-radius: 0.375rem;
+    border: 1px solid #dfe6de;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
     outline: 0;
     border-color: #006226f5;
     box-shadow: 0 0 0 4px #b5fcd0;
@@ -260,7 +267,6 @@ input[type="file"] {
     border-radius: 0.375rem;
     cursor: pointer;
     display: block;
-    width: 100%;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -272,4 +278,36 @@ input[type="file"] {
     outline: 0px;
     scroll-margin-top: 80px;
     scroll-margin-bottom: 100px;
+}
+
+input[type="file"]::file-selector-button {
+    padding: .375rem .75rem;
+    margin: -.375rem -.75rem;
+    -webkit-margin-end: .75rem;
+    margin-inline-end: .75rem;
+    pointer-events: none;
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0;
+    border-inline-end-width: 1px;
+    border-radius: 0;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+::file-selector-button {
+    font: inherit;
+    -webkit-appearance: button;
+}
+
+input[type="file"]::file-selector-button {
+    background-color: #006226f5;
+    color: #ffffff;
+}
+
+.form-title {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+    text-align: center;
+    color: #000;
 }

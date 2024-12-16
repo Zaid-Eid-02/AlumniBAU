@@ -4,7 +4,17 @@
 {% block main %}
 {% if alumni %}
 <link rel="stylesheet" href="static/styles/table.css">
-<h2>Alumni</h2><a href="/alumni"><button>Reset Filters</button></a>
+<link rel="stylesheet" href="static/styles/alumni.css">
+<div class="container">
+    <div></div>
+    <h2>Alumni</h2>
+    <a href="/alumni">
+        <button>
+            <img src="/static/pics/icons/about.svg">
+            Reset Filters
+        </button>
+    </a>
+</div>
 {% set majors = ["Computer Science", "Software Engineering", "Information Systems", "Computer Graphics", "Information Security"] %}
 {% set degrees = ["Bachelors", "Master Thesis", "Master Comprehensive"]%}
 <script src="static/scripts/TableFilter/tablefilter.js"></script>

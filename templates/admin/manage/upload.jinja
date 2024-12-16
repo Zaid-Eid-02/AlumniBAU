@@ -1,12 +1,14 @@
 {% extends "layout/layout.jinja" %}
-{% from "form.jinja" import render_field %}
+{% from "form.jinja" import render_form %}
 {% set highlight_tab = "manage" %}
 {% block main %}
-<form action="/upload" method="post" enctype="multipart/form-data">
-    <a href="/static/example.csv" target="_blank">Download Example CSV</a><br>
-    {{ form.hidden_tag() }}
-    {{ render_field(form.file, accept=".csv") }}<br>
-    {{ render_field(form.submit) }}
-</form>
+<link rel="stylesheet" href="/static/styles/upload.css">
+<h4 class="download">
+    <a href="/static/examples/example-hashed.csv" target="_blank">
+        <img src="/static/pics/icons/download.svg">
+        Download Example CSV
+    </a>
+</h4>
+{{render_form(form)}}
 {{message}}
 {% endblock %}

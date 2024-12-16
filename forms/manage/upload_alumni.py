@@ -4,7 +4,8 @@ from wtforms.validators import InputRequired
 
 
 class UploadAlumniForm(FlaskForm):
+    form_title = "Upload Alumni"
     file = FileField(
-        description="Pick a file:", validators=[InputRequired(message="Please select a file to upload")]
+        validators=[InputRequired(message="Please select a file to upload")]
     )
     submit = SubmitField("Upload")

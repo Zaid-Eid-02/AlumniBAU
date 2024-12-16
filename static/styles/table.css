@@ -16,6 +16,7 @@ table {
     caption-side: bottom;
     border-collapse: collapse;
     width: 100%;
+    text-align: center;
 }
 
 tbody,
