@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, session
+from flask import Blueprint, redirect, render_template, session
 from utils import login_required
 
 bp = Blueprint("index", __name__)
@@ -13,3 +13,8 @@ def index():
                     else "/announce" if "announce" in session.get("perms")
                     else "/mod" if "mod" in session.get("perms")
                     else "/news")
+
+
+@bp.route("/about")
+def about():
+    return render_template("about.jinja")

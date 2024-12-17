@@ -43,7 +43,7 @@ h3 {
     margin-inline: 2rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 787px) {
     .container>a {
         display: none;
     }

@@ -354,7 +354,7 @@
     var submitChart = new Chart(document.getElementById("submitted"), {
         type: 'doughnut',
         data: {
-            labels: ["yes", "no"],
+            labels: ["Yes", "No"],
             datasets: [{
                 data: [{{ stats.survey_submitted_count }}, {{ stats.alumni_count - stats.survey_submitted_count }}],
                 backgroundColor: ["#008951", "#aaaaaa"],
@@ -377,7 +377,7 @@
     var followChart = new Chart(document.getElementById("follow"), {
         type: 'doughnut',
         data: {
-            labels: ["yes", "no", "unspecified"],
+            labels: ["Yes", "No", "Unspecified"],
             datasets: [{
                 data: [{{ stats.follow_count }}, {{ stats.not_follow_count }}, {{ stats.alumni_count - stats.follow_count }}],
                 backgroundColor: ["#008951", "#FF6384", "#aaaaaa"],
@@ -400,7 +400,7 @@
     var communicateChart = new Chart(document.getElementById("communicate"), {
         type: 'doughnut',
         data: {
-            labels: ["yes", "no", "unspecified"],
+            labels: ["Yes", "No", "Unspecified"],
             datasets: [{
                 data: [{{ stats.communicate_count }}, {{ stats.not_communicate_count }}, {{ stats.alumni_count - stats.communicate_count }}],
                 backgroundColor: ["#008951", "#FF6384", "#aaaaaa"],
@@ -423,7 +423,7 @@
     var clubChart = new Chart(document.getElementById("club"), {
         type: 'doughnut',
         data: {
-            labels: ["yes", "no", "unspecified"],
+            labels: ["Yes", "No", "Unspecified"],
             datasets: [{
                 data: [{{ stats.club_count }}, {{ stats.not_club_count }}, {{ stats.alumni_count - stats.club_count }}],
                 backgroundColor: ["#008951", "#FF6384", "#aaaaaa"],

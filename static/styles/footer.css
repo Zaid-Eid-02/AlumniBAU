@@ -1,6 +1,17 @@
 footer {
-    background-image: url('/static/pics/backgrounds/green.jpg');
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
     height: 18rem;
+}
+
+footer>.background {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    width: 110vw;
+    height: 18rem;
+    mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.61), transparent);
 }
 
 body {
@@ -8,5 +19,20 @@ body {
 }
 
 main {
-    min-height: calc(100vh - 29.9rem);
+    min-height: calc(103vh - 29.9rem);
+}
+
+.footer-content {
+    color: rgb(37, 37, 37);
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+}
+
+.links > a {
+    line-height: 2rem;
+    text-decoration: none;
+    color: rgb(37, 37, 37);
 }
