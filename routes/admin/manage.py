@@ -34,3 +34,11 @@ def hash():
         repo.hash_file(form.file_name.data)
         flash(f"Successfully hashed {form.file_name.data}")
     return render_template("admin/manage/hash.jinja", form=form)
+
+
+@bp.route("/admins")
+@admin_required
+@manager_required
+def admins():
+    admins = repo.get_all_admins()
+    return render_template("admin/manage/admins.jinja", admins=admins)

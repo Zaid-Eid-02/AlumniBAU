@@ -1,0 +1,61 @@
+{% extends "layout/layout.jinja" %}
+{% set highlight_tab = "manage" %}
+{% block main %}
+<link rel="stylesheet" href="static/styles/table.css">
+<link rel="stylesheet" href="/static/styles/alumni.css">
+<script src="static/scripts/TableFilter/tablefilter.js"></script>
+<div class="container" style="max-width: 1000px;">
+    <div></div>
+    <h2>Admins</h2>
+    <a href="/add">
+        <button>
+            <img src="/static/pics/icons/add.svg">
+            Add Admin
+        </button>
+    </a>
+</div>
+<div class="table-container" style="max-width: 1000px;">
+    <table class="sortable">
+        <thead>
+            <tr>
+                <th class="name sorttable_nosort">Username</th>
+                <th class="sorttable_nosort">Is Manager</th>
+                <th class="sorttable_nosort">Can Announce</th>
+                <th class="sorttable_nosort">Has Data Access</th>
+                <th class="sorttable_nosort">Is Moderator</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for admin in admins %}
+            <tr>
+                <td>{{ admin.username }}</td>
+                <td>{% if admin.manage %} Yes {% else %} No {% endif %}</td>
+                <td>{% if admin.announce %} Yes {% else %} No {% endif %}</td>
+                <td>{% if admin.stats %} Yes {% else %} No {% endif %}</td>
+                <td>{% if admin.mod %} Yes {% else %} No {% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script data-config>
+    // TableFilter settings
+    var tfConfig = {
+        base_path: "static/scripts/TableFilter/",
+        col_1: "select",
+        col_2: "select",
+        col_3: "select",
+        col_4: "select",
+        popup_filters: true,
+        mark_active_columns: true,
+        highlight_keywords: true,
+        themes: [{
+            name: 'transparent'
+        }],
+    };
+
+    // Instantiate TableFilter
+    var tf = new TableFilter(document.querySelector("table"), tfConfig);
+    tf.init();
+</script>
+{% endblock %}

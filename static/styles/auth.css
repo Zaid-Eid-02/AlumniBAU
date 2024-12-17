@@ -159,7 +159,3 @@ li:last-child label {
     margin-inline: calc(50% - 12.5rem);
     transform: translateX(-4rem);
 }
-
-main {
-    padding-top: 2rem;
-}

@@ -9,7 +9,7 @@ footer>.background {
     margin: 0;
     padding: 0;
     position: absolute;
-    width: 110vw;
+    width: 100vw;
     height: 18rem;
     mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.61), transparent);
 }
@@ -19,7 +19,7 @@ body {
 }
 
 main {
-    min-height: calc(103vh - 29.9rem);
+    min-height: calc(100vh - 28.55rem);
 }
 
 .footer-content {
