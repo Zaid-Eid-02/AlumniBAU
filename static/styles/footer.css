@@ -36,3 +36,7 @@ main {
     text-decoration: none;
     color: rgb(37, 37, 37);
 }
+
+footer * {
+    font-weight: bold;
+}
