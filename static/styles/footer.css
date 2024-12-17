@@ -31,7 +31,7 @@ main {
     height: 100%;
 }
 
-.links > a {
+.links>a {
     line-height: 2rem;
     text-decoration: none;
     color: rgb(37, 37, 37);

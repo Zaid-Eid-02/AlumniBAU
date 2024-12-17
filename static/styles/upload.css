@@ -12,7 +12,8 @@ form {
     max-width: 19rem;
 }
 
-form>input, .download {
+form>input,
+.download {
     margin-inline: auto;
     cursor: pointer;
 }
@@ -39,7 +40,7 @@ form>input, .download {
 }
 
 
-.download:hover{
+.download:hover {
     background-color: #cacaca;
 }
 
